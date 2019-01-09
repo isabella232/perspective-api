@@ -1,0 +1,10 @@
+{
+    "name": "perspective/api",
+    "description": "Perspective API",
+    "autoload": {
+        "psr-4": {"PerspectiveAPI\\": "src/"}
+    },
+    "require": {
+        "php": ">=7.1.3"
+    }
+}
