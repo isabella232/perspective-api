@@ -12,12 +12,48 @@ namespace PerspectiveAPI\Object\Types;
 
 use \PerspectiveAPI\Object\Object as Object;
 use \PerspectiveAPI\Object\ReferenceInterface as ReferenceInterface;
+use \PerspectiveAPI\Storage\Types\UserStore as UserStore;
 
 /**
  * User Class.
  */
 abstract class User extends Object implements ReferenceInterface
 {
+
+    /**
+     * The username of the user
+     *
+     * @var string|null
+     */
+    protected $username = null;
+
+
+    /**
+     * Construct function for User.
+     *
+     * @param object $store     The store the user record belongs to.
+     * @param string $id        The id of the user.
+     * @param string $username  The user name of the user.
+     * @param string $firstName The users first name.
+     * @param string $lastName  The users last name.
+     *
+     * @return void
+     */
+    public function __construct(
+        UserStore $store,
+        string $id,
+        string $username,
+        string $firstName,
+        string $lastName
+    ) {
+        $this->store    = $store;
+        $this->id       = $id;
+        $this->username = $username;
+
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+
+    }//end __construct()
 
 
     /**

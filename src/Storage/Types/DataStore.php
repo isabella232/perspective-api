@@ -10,11 +10,12 @@
 
 namespace PerspectiveAPI\Storage\Types;
 
+use \PerspectiveAPI\Storage\Types\Store as Store;
 
 /**
  * DataStore Class.
  */
-abstract class DataStore
+abstract class DataStore extends Store
 {
 
     /**

@@ -20,4 +20,19 @@ use \PerspectiveAPI\Object\Object as Object;
 abstract class ProjectInstance extends Object
 {
 
+
+    /**
+     * Construct function for Project Instance.
+     *
+     * @param string $id    The id of the project.
+     *
+     * @return void
+     */
+    public function __construct(string $id)
+    {
+        $this->id    = $id;
+
+    }//end __construct()
+
+
 }//end class

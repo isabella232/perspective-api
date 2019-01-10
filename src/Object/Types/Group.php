@@ -12,12 +12,29 @@ namespace PerspectiveAPI\Object\Types;
 
 use \PerspectiveAPI\Object\Object as Object;
 use \PerspectiveAPI\Object\ReferenceInterface as ReferenceInterface;
+use \PerspectiveAPI\Storage\Types\UserStore as UserStore;
 
 /**
  * Group Class.
  */
 abstract class Group extends Object implements ReferenceInterface
 {
+
+
+    /**
+     * Construct function for User Group.
+     *
+     * @param object $store The store the user group record belongs to.
+     * @param string $id    The id of the user group.
+     *
+     * @return void
+     */
+    public function __construct(UserStore $store, string $id)
+    {
+        $this->store = $store;
+        $this->id    = $id;
+
+    }//end __construct()
 
 
     /**

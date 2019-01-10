@@ -10,11 +10,12 @@
 
 namespace PerspectiveAPI\Storage\Types;
 
+use \PerspectiveAPI\Storage\Types\Store as Store;
 
 /**
  * UserStore Class.
  */
-abstract class UserStore
+abstract class UserStore extends Store
 {
 
 
