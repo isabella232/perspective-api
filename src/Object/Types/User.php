@@ -42,16 +42,24 @@ abstract class User extends Object implements ReferenceInterface
     public function __construct(
         UserStore $store,
         string $id,
-        string $username,
-        string $firstName,
-        string $lastName
+        string $username=null,
+        string $firstName=null,
+        string $lastName=null
     ) {
-        $this->store    = $store;
-        $this->id       = $id;
-        $this->username = $username;
+        $this->store = $store;
+        $this->id    = $id;
 
-        $this->setFirstName($firstName);
-        $this->setLastName($lastName);
+        if ($username !== null) {
+            $this->username = $username;
+        }
+
+        if ($firstName !== null) {
+            $this->setFirstName($firstName);
+        }
+
+        if ($lastName !== null) {
+            $this->setLastName($lastName);
+        }
 
     }//end __construct()
 
