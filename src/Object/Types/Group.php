@@ -20,19 +20,31 @@ use \PerspectiveAPI\Storage\Types\UserStore as UserStore;
 abstract class Group extends Object implements ReferenceInterface
 {
 
+    /**
+     * The name of the group.
+     *
+     * @var string|null
+     */
+    protected $groupName = null;
+
 
     /**
      * Construct function for User Group.
      *
-     * @param object $store The store the user group record belongs to.
-     * @param string $id    The id of the user group.
+     * @param object $store     The store the user group record belongs to.
+     * @param string $id        The id of the user group.
+     * @param string $groupName Optional name of the group.
      *
      * @return void
      */
-    public function __construct(UserStore $store, string $id)
+    public function __construct(UserStore $store, string $id, string $groupName=null)
     {
         $this->store = $store;
         $this->id    = $id;
+
+        if ($groupName !== null) {
+            $this->groupName = $groupName;
+        }
 
     }//end __construct()
 
