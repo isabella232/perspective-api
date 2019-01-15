@@ -11,7 +11,6 @@
 namespace PerspectiveAPI\Property\Types;
 
 use \PerspectiveAPI\Property\Types\Property as Property;
-use \PerspectiveAPI\Property\FileTrait as FileTrait;
 
 /**
  * File Class.
@@ -19,6 +18,21 @@ use \PerspectiveAPI\Property\FileTrait as FileTrait;
 class File extends Property
 {
 
-    use FileTrait;
+
+    /**
+     * Serve file type property content.
+     *
+     * When sendFileHeader() function is used in inline PHP code, it uses this action to send X-Sendfile
+     * header for file type property. For any reason if it can't send header, then it returns false.
+     *
+     * @param string $shadowid The optional shadowid.
+     *
+     * @return void|boolean
+     */
+    public function sendFileHeader(string $shadowid=null)
+    {
+
+    }
+
 
 }//end class

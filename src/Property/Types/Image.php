@@ -10,15 +10,12 @@
 
 namespace PerspectiveAPI\Property\Types;
 
-use \PerspectiveAPI\Property\Types\Property as Property;
-use \PerspectiveAPI\Property\FileTrait as FileTrait;
+use \PerspectiveAPI\Property\Types\File as File;
 
 /**
  * Image Class.
  */
-class Image extends Property
+class Image extends File
 {
-
-    use FileTrait;
 
 }//end class
