@@ -18,6 +18,7 @@ use \PerspectiveAPI\Storage\Types\Store as Store;
 class DataStore extends Store
 {
 
+
     /**
      * Create data record.
      *
@@ -28,7 +29,21 @@ class DataStore extends Store
      */
     public function createDataRecord(string $type=null, string $parent=null)
     {
-        return \PerspectiveAPI\Connector::createDataRecord($this->code, $type, $parent);
+        $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName('data', $type);
+        if ($typeClass === null) {
+            throw new \Exception('Unknown custom data record type to create');
+        }
+
+        if (class_exists($typeClass) === false) {
+            throw new \Exception('Type class can not be found');
+        }
+
+        $id = \PerspectiveAPI\Connector::createDataRecord($this->code, $type, $parent);
+        if ($id !== null) {
+            return new $typeClass($this, $id);
+        }
+
+        throw new \Exception('Failed to create a new data record');
 
     }//end createDataRecord()
 
@@ -42,7 +57,16 @@ class DataStore extends Store
      */
     public function getDataRecord(string $id)
     {
-        return \PerspectiveAPI\Connector::getDataRecord($this->code, $id);
+        $dataRecord = \PerspectiveAPI\Connector::getDataRecord('data', $id);
+        if ($dataRecord === null) {
+            return null;
+        }
+
+        if (class_exists($dataRecord['typeClass']) === false) {
+            throw new \Exception('Type class can not be found');
+        }
+
+        return new $dataRecord['typeClass']($this, $dataRecord['id']);
 
     }//end getDataRecord()
 
@@ -57,7 +81,16 @@ class DataStore extends Store
      */
     public function getUniqueDataRecord(string $propertyid, string $value)
     {
-        return \PerspectiveAPI\Connector::getDataRecordByValue($this->code, $propertyid, $value);
+        $dataRecord = \PerspectiveAPI\Connector::getDataRecordByValue($this->code, $propertyid, $value);
+        if ($dataRecord === null) {
+            return null;
+        }
+
+        if (class_exists($dataRecord['typeClass']) === false) {
+            throw new \Exception('Type class can not be found');
+        }
+
+        return new $dataRecord['typeClass']($this, $dataRecord['id']);
 
     }//end getUniqueDataRecord()
 

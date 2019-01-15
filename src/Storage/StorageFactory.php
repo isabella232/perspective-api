@@ -26,7 +26,11 @@ class StorageFactory
      */
     public static function getDataStore(string $name)
     {
-        return \PerspectiveAPI\Connector::getDataStore($name);
+        if (\PerspectiveAPI\Connector::getDataStoreExists($name) === true) {
+            return new \PerspectiveAPI\Storage\Types\DataStore($name);
+        }
+
+        return null;
 
     }//end getDataStore()
 
@@ -40,7 +44,11 @@ class StorageFactory
      */
     public static function getUserStore(string $name)
     {
-        return \PerspectiveAPI\Connector::getUserStore($name);
+        if (\PerspectiveAPI\Connector::getUserStoreExists($name) === true) {
+            return new \PerspectiveAPI\Storage\Types\UserStore($name);
+        }
+
+        return null;
 
     }//end getUserStore()
 

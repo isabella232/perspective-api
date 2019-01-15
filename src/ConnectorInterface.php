@@ -36,17 +36,31 @@ interface ConnectorInterface
     public static function setPropertyValue(string $objectType, string $id, string $propertyCode, $value);
     public static function deletePropertyValue(string $objectType, string $id, string $propertyCode);
 
-    public static function getDataStore(string $name);
-    public static function getUserStore(string $name);
+    // return true/false
+    public static function getDataStoreExists(string $name);
+    public static function getUserStoreExists(string $name);
 
+    // returns new data record ID
     public static function createDataRecord(string $storeCode, string $customType, string $parent=null);
+
+    // returns null | ['id' => ID, 'typeClass' => TYPE_CLASSNAME]
     public static function getDataRecord(string $storeCode, string $id);
+
+    // returns null | ['id' => ID, 'typeClass' => TYPE_CLASSNAME]
     public static function getDataRecordByValue(string $storeCode, string $propertyid, string $value);
 
+    // return new user entityid
     public static function createUser(string $storeCode, string $username, string $firstName, string $lastName, string $type=null, array $groups=[]);
+
+    // return new user group entityid
     public static function createGroup(string $storeCode, string $groupName, array $groups=[]);
+
+    // returns null | ['id' => ID, 'groupName' => ...]
     public static function getGroup(string $storeCode, string $id);
+
+    // returns null | ['id' => ID, 'username' => ...,  'firstName' => ..., 'lastName' => ...]
     public static function getUserByUsername(string $storeCode, string $username);
+    public static function getUser(string $storeCode, string $id);
 
     public static function getProject();
 
@@ -54,5 +68,8 @@ interface ConnectorInterface
     public static function logout();
 
     public static function sendEmail(string $to, string $from, string $subject, string $message);
+
+    // returns the full namespaced class name.
+    public static function getCustomTypeClassByName(string $objectType, string $type);
 
 }//end interface
