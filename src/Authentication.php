@@ -28,7 +28,7 @@ class Authentication
      *
      * @var boolean
      */
-    private static $loggedIn = false;
+    private static $loggedIn = null;
 
 
     /**
@@ -106,6 +106,22 @@ class Authentication
      */
     final public static function isLoggedIn()
     {
+        if (self::$loggedIn === null) {
+            $user = \PerspectiveAPI\Connector::getLoggedInUser();
+            if ($user === null) {
+                self::$loggedIn = false;
+            } else {
+                self::$user     = new \PerspectiveAPI\Object\Types\User(
+                    \PerspectiveAPI\StorageFactory::getUserStore($user['storeCode']),
+                    $user['id'],
+                    $user['username'],
+                    $user['firstName'],
+                    $user['lastName']
+                );
+                self::$loggedIn = true;
+            }
+        }
+
         return self::$loggedIn;
 
     }//end isLoggedIn()

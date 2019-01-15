@@ -16,6 +16,27 @@ namespace PerspectiveAPI\Storage;
 class StorageFactory
 {
 
+    /**
+     * Data/User store objects.
+     *
+     * @var array
+     */
+    private static $stores = [
+        'data' => [],
+        'user' => [],
+    ];
+
+
+    /**
+     * Private constructor to stay static.
+     *
+     * @return void
+     */
+    private function __construct()
+    {
+
+    }//end __construct()
+
 
     /**
      * Gets the data store object.
@@ -26,8 +47,13 @@ class StorageFactory
      */
     public static function getDataStore(string $name)
     {
+        if (isset(self::$stores['data'][$name]) === true) {
+            return self::$stores['data'][$name];
+        }
+
         if (\PerspectiveAPI\Connector::getDataStoreExists($name) === true) {
-            return new \PerspectiveAPI\Storage\Types\DataStore($name);
+            self::$stores['data'][$name] = new \PerspectiveAPI\Storage\Types\DataStore($name);
+            return self::$stores['data'][$name];
         }
 
         return null;
@@ -44,8 +70,13 @@ class StorageFactory
      */
     public static function getUserStore(string $name)
     {
+        if (isset(self::$stores['user'][$name]) === true) {
+            return self::$stores['user'][$name];
+        }
+
         if (\PerspectiveAPI\Connector::getUserStoreExists($name) === true) {
-            return new \PerspectiveAPI\Storage\Types\UserStore($name);
+            self::$stores['user'][$name] = new \PerspectiveAPI\Storage\Types\UserStore($name);
+            return self::$stores['user'][$name];
         }
 
         return null;

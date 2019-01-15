@@ -67,6 +67,9 @@ interface ConnectorInterface
     public static function login(string $id);
     public static function logout();
 
+    // returns the currently logged in user info like getUser() + 'storeCode' => STORE_CODE
+    public static function getLoggedInUser();
+
     public static function sendEmail(string $to, string $from, string $subject, string $message);
 
     // returns the full namespaced class name.
