@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Markdown Class.
  */
-abstract class Markdown extends Property
+class Markdown extends Property
 {
 
 }//end class

@@ -13,7 +13,7 @@ namespace PerspectiveAPI\Storage;
 /**
  * StorageFactory Class.
  */
-abstract class StorageFactory
+class StorageFactory
 {
 
 
@@ -24,7 +24,11 @@ abstract class StorageFactory
      *
      * @return null|object
      */
-    abstract public static function getDataStore(string $name);
+    public static function getDataStore(string $name)
+    {
+        return \PerspectiveAPI\Connector::getDataStore($name);
+
+    }//end getDataStore()
 
 
     /**
@@ -34,7 +38,11 @@ abstract class StorageFactory
      *
      * @return null|object
      */
-    abstract public static function getUserStore(string $name);
+    public static function getUserStore(string $name)
+    {
+        return \PerspectiveAPI\Connector::getUserStore($name);
+
+    }//end getUserStore()
 
 
 }//end class

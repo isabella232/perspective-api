@@ -10,12 +10,10 @@
 
 namespace PerspectiveAPI\Object;
 
-use \PerspectiveAPI\Object\ObjectInterface as ObjectInterface;
-
 /**
  * DataRecord Class.
  */
-abstract class Object implements ObjectInterface
+abstract class Object
 {
 
 
@@ -39,7 +37,11 @@ abstract class Object implements ObjectInterface
      *
      * @return string
      */
-    abstract public function getID();
+    final public function getID()
+    {
+        return $this->id;
+
+    }//end getID()
 
 
     /**
@@ -47,7 +49,110 @@ abstract class Object implements ObjectInterface
      *
      * @return object
      */
-    abstract public function getStorage();
+    final public function getStorage()
+    {
+        return $this->storage;
+
+    }//end getStorage()
+
+
+    /**
+     * Gets the value of a given property.
+     *
+     * @param string $propertyCode The code of the property that is being retrieved.
+     *
+     * @return mixed
+     */
+    final public function getValue(string $propertyCode)
+    {
+        $property = $this->property($propertyCode);
+        if ($property === null) {
+            return null;
+        }
+
+        return $property->getValue();
+
+    }//end getValue()
+
+
+    /**
+     * Sets the value of a given property.
+     *
+     * @param string $propertyCode The code of the property that the value is being set into.
+     * @param mixed  $value        The value to set into the property.
+     *
+     * @return void
+     */
+    final public function setValue(string $propertyCode, $value)
+    {
+        $property = $this->property($propertyCode);
+        if ($property === null) {
+            return null;
+        }
+
+        return $property->setValue($value);
+
+    }//end setValue()
+
+
+    /**
+     * Deletes the value of a given property.
+     *
+     * @param string $propertyCode The code of the property that the value is being deleted from.
+     *
+     * @return void
+     */
+    final public function deleteValue(string $propertyCode)
+    {
+        $property = $this->property($propertyCode);
+        if ($property === null) {
+            return null;
+        }
+
+        return $property->deleteValue();
+
+    }//end deleteValue()
+
+
+    /**
+     * Get the property type object.
+     *
+     * @param string $propertyCode The property code.
+     *
+     * @return object
+     */
+    final public function property(string $propertyCode)
+    {
+        $propertyTypeClass = \PerspectiveAPI\Connector::getPropertyTypeClass($this->getObjectType(), $propertyCode);
+        if ($propertyTypeClass === null) {
+            throw new \Exception('Unknown property code');
+        }
+
+        return new $propertyTypeClass($this, $propertyCode);
+
+    }//end property()
+
+
+    /**
+     * Gets the type of the object.
+     *
+     * @return string
+     */
+    final public function getObjectType()
+    {
+        if ($this instanceof \PerspectiveAPI\Object\Types\DataRecord) {
+            $objectType = 'data';
+        } else if ($this instanceof \PerspectiveAPI\Object\Types\User
+            || $this instanceof \PerspectiveAPI\Object\Types\Group
+        ) {
+            $objectType = 'user';
+        } else if ($this instanceof \PerspectiveAPI\Object\Types\ProjectInstance) {
+            $objectType = 'project';
+        }
+
+        return $objectType;
+
+    }//end getObjectType()
 
 
 }//end class

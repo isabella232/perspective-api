@@ -11,14 +11,16 @@
 namespace PerspectiveAPI\Object\Types;
 
 use \PerspectiveAPI\Object\Object as Object;
-use \PerspectiveAPI\Object\ReferenceInterface as ReferenceInterface;
+use \PerspectiveAPI\Object\ReferenceTrait as ReferenceTrait;
 use \PerspectiveAPI\Storage\Types\UserStore as UserStore;
 
 /**
  * Group Class.
  */
-abstract class Group extends Object implements ReferenceInterface
+class Group extends Object
 {
+
+    use ReferenceTrait;
 
     /**
      * The name of the group.
@@ -54,24 +56,41 @@ abstract class Group extends Object implements ReferenceInterface
      *
      * @return array
      */
-    abstract public function getMembers();
+    public function getMembers()
+    {
+        return \PerspectiveSandbox\Connector::getGroupMembers($this->getID());
+
+    }//end getMembers()
+
 
     /**
-     * Get name.
+     * Gets the name of the user group.
      *
      * @return string
      */
-    abstract public function getName();
+    public function getName()
+    {
+        return $this->groupName;
+
+    }//end getName()
 
 
     /**
-     * Set name
+     * Sets the name of the user group.
      *
      * @param string $name The name of the group.
      *
      * @return void
      */
-    abstract public function setName(string $name);
+    public function setName(string $name)
+    {
+        if (\PerspectiveAPI\Connector::setGroupName($this->getID(), $name) === true) {
+            $this->groupName = $name;
+        } else {
+            throw new \Exception('Failed to set user group name');
+        }
+
+    }//end setName()
 
 
 }//end class

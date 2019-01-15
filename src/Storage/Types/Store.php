@@ -1,6 +1,6 @@
 <?php
 /**
- * DataStore class.
+ * Store class.
  *
  * @package    Perspective
  * @subpackage API
@@ -18,7 +18,7 @@ abstract class Store
 {
 
     /**
-     * The data store code.
+     * The store code.
      *
      * @var string|null
      */
@@ -26,9 +26,9 @@ abstract class Store
 
 
     /**
-     * Constructor for DataStore Class.
+     * Constructor for Store Class.
      *
-     * @param string $code The name of the user store.
+     * @param string $code The code of the store.
      *
      * @return void
      */

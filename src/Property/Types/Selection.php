@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Selection Class.
  */
-abstract class Selection extends Property
+class Selection extends Property
 {
 
 }//end class

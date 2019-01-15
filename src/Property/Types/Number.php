@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Number Class.
  */
-abstract class Number extends Property
+class Number extends Property
 {
 
 
@@ -26,7 +26,11 @@ abstract class Number extends Property
      *
      * @return void
      */
-    abstract public function increment(float $value=1);
+    public function increment(float $value=1)
+    {
+        $this->setValue($this->getValue() + $value);
+
+    }//end increment()
 
 
     /**
@@ -36,7 +40,11 @@ abstract class Number extends Property
      *
      * @return void
      */
-    abstract public function decrement(float $value=1);
+    public function decrement(float $value=1)
+    {
+        $this->setValue($this->getValue() - $value);
+
+    }//end decrement()
 
 
 }//end class

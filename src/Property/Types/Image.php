@@ -11,12 +11,14 @@
 namespace PerspectiveAPI\Property\Types;
 
 use \PerspectiveAPI\Property\Types\Property as Property;
-use \PerspectiveAPI\Property\FileInterface as FileInterface;
+use \PerspectiveAPI\Property\FileTrait as FileTrait;
 
 /**
  * Image Class.
  */
-abstract class Image extends Property implements FileInterface
+class Image extends Property
 {
+
+    use FileTrait;
 
 }//end class

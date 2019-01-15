@@ -11,9 +11,9 @@
 namespace PerspectiveAPI\Property;
 
 /**
- * File Interface.
+ * File Trait.
  */
-interface FileInterface
+trait FileTrait
 {
 
 
@@ -27,7 +27,10 @@ interface FileInterface
      *
      * @return void|boolean
      */
-    public function sendFileHeader(string $shadowid=null);
+    public function sendFileHeader(string $shadowid=null)
+    {
+
+    }
 
 
 }//end trait

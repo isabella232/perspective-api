@@ -11,9 +11,9 @@
 namespace PerspectiveAPI;
 
 /**
- * Request Interface.
+ * Request class.
  */
-interface RequestInterface
+class Request
 {
 
     /**
@@ -21,7 +21,11 @@ interface RequestInterface
      *
      * @return object
      */
-    public static function getProjectInstance();
+    public static function getProjectInstance()
+    {
+        return new \PerspectiveAPI\Connector::getProject();
+
+    }//end getProjectInstance()
 
 
-}//end interface
+}//end class

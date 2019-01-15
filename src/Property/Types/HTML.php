@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * HTML Class.
  */
-abstract class HTML extends Property
+class HTML extends Property
 {
 
 }//end class

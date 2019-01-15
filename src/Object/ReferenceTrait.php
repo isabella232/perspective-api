@@ -1,6 +1,6 @@
 <?php
 /**
- * ReferenceInterface
+ * ReferenceTrait
  *
  * These function signatures are shared across multiple base object type classes and should not diverge.
  *
@@ -13,9 +13,9 @@
 namespace PerspectiveAPI\Object;
 
 /**
- * ReferenceInterface
+ * ReferenceTrait
  */
-interface ReferenceInterface
+trait ReferenceTrait
 {
 
 
@@ -26,7 +26,11 @@ interface ReferenceInterface
      *
      * @return mixed
      */
-    public function getReference(string $referenceCode);
+    final public function getReference(string $referenceCode)
+    {
+        return \PerspectiveAPI\Connector::getReference($this->getObjectType(), $this->getID(), $referenceCode);
+
+    }//end getReference()
 
 
     /**
@@ -37,7 +41,11 @@ interface ReferenceInterface
      *
      * @return void
      */
-    public function addReference(string $referenceCode, $objects);
+    final public function addReference(string $referenceCode, $objects)
+    {
+        return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $referenceCode, $objects);
+
+    }//end addReference()
 
 
     /**
@@ -48,7 +56,11 @@ interface ReferenceInterface
      *
      * @return void
      */
-    public function setReference(string $referenceCode, $objects);
+    final public function setReference(string $referenceCode, $objects)
+    {
+        return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $referenceCode, $objects);
+
+    }//end setReference()
 
 
     /**
@@ -59,7 +71,11 @@ interface ReferenceInterface
      *
      * @return void
      */
-    public function deleteReference(string $referenceCode, $objects);
+    final public function deleteReference(string $referenceCode, $objects)
+    {
+        return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $referenceCode, $objects);
+
+    }//end deleteReference()
 
 
 }//end interface

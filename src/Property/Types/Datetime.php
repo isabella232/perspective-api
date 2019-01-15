@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Datetime Class.
  */
-abstract class Datetime extends Property
+class Datetime extends Property
 {
 
 }//end class

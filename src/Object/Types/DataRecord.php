@@ -11,15 +11,16 @@
 namespace PerspectiveAPI\Object\Types;
 
 use \PerspectiveAPI\Object\AspectedObject as AspectedObject;
-use \PerspectiveAPI\Object\ReferenceInterface as ReferenceInterface;
+use \PerspectiveAPI\Object\ReferenceTrait as ReferenceTrait;
 use \PerspectiveAPI\Storage\Types\DataStore as DataStore;
 
 /**
  * DataRecord Class.
  */
-abstract class DataRecord extends AspectedObject implements ReferenceInterface
+class DataRecord extends AspectedObject
 {
 
+    use ReferenceTrait;
 
     /**
      * Construct function for Data Record.
@@ -44,7 +45,11 @@ abstract class DataRecord extends AspectedObject implements ReferenceInterface
      *
      * @return array
      */
-    abstract public function getParents(int $depth=null);
+    public function getParents(int $depth=null)
+    {
+        return \PerspectiveAPI\Connector::getParents($this->getObjectType(), $this->getID(), $depth);
+
+    }//end getParents()
 
 
     /**
@@ -54,7 +59,11 @@ abstract class DataRecord extends AspectedObject implements ReferenceInterface
      *
      * @return array
      */
-    abstract public function getChildren(int $depth=null);
+    public function getChildren(int $depth=null)
+    {
+        return \PerspectiveAPI\Connector::getChildren($this->getObjectType(), $this->getID(), $depth);
+
+    }//end getChildren()
 
 
 }//end class

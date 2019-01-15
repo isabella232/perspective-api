@@ -23,11 +23,11 @@ abstract class Property
 {
 
     /**
-     * ID of the property object.
+     * Code of the property object.
      *
      * @var string
      */
-    protected $id = null;
+    protected $code = null;
 
     /**
      * The object (page, user etc) or NULL for no object context.
@@ -69,7 +69,7 @@ abstract class Property
             throw new \Exception(_('Invalid owner object in property constructor'));
         }
 
-        $this->id = $propertyCode;
+        $this->code = $propertyCode;
 
     }//end __construct()
 
@@ -79,7 +79,15 @@ abstract class Property
      *
      * @return mixed
      */
-    abstract public function getValue();
+    public function getValue()
+    {
+        return \PerspectiveAPI\Connector::getPropertyValue(
+            $this->object->getObjectType(),
+            $this->object->getID(),
+            $this->code
+        );
+
+    }//end getValue()
 
 
     /**
@@ -91,7 +99,16 @@ abstract class Property
      * @throws InvalidDataException When propertyid is not known.
      * @throws ReadOnlyException    When request is in read only mode.
      */
-    abstract public function setValue($value);
+    public function setValue($value)
+    {
+        \PerspectiveAPI\Connector::setPropertyValue(
+            $this->object->getObjectType(),
+            $this->object->getID(),
+            $this->code,
+            $value
+        );
+
+    }//end setValue()
 
 
     /**
@@ -101,7 +118,15 @@ abstract class Property
      * @throws InvalidDataException Thrown when propertyid is unknown.
      * @throws ReadOnlyException    When request is in read only mode.
      */
-    abstract public function deleteValue();
+    public function deleteValue()
+    {
+        \PerspectiveAPI\Connector::deletePropertyValue(
+            $this->object->getObjectType(),
+            $this->object->getID(),
+            $this->code
+        );
+
+    }//end deleteValue()
 
 
 }//end class

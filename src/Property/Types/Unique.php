@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Unique Class.
  */
-abstract class Unique extends Property
+class Unique extends Property
 {
 
 }//end class

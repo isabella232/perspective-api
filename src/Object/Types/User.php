@@ -11,21 +11,23 @@
 namespace PerspectiveAPI\Object\Types;
 
 use \PerspectiveAPI\Object\Object as Object;
-use \PerspectiveAPI\Object\ReferenceInterface as ReferenceInterface;
+use \PerspectiveAPI\Object\ReferenceTrait as ReferenceTrait;
 use \PerspectiveAPI\Storage\Types\UserStore as UserStore;
 
 /**
  * User Class.
  */
-abstract class User extends Object implements ReferenceInterface
+class User extends Object
 {
+
+    use ReferenceTrait;
 
     /**
      * The username of the user
      *
      * @var string|null
      */
-    protected $username = null;
+    private $username = null;
 
 
     /**
@@ -69,7 +71,11 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return string
      */
-    abstract public function getUsername();
+    final public function getUsername()
+    {
+        return $this->username;
+
+    }//end getUsername()
 
 
     /**
@@ -77,7 +83,11 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return string
      */
-    abstract public function getFirstName();
+    final public function getFirstName()
+    {
+        return $this->firstName;
+
+    }//end getFirstName()
 
 
     /**
@@ -85,7 +95,29 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return string
      */
-    abstract public function getLastName();
+    final public function getLastName()
+    {
+        return $this->lastName;
+
+    }//end getLastName()
+
+
+    /**
+     * Set username.
+     *
+     * @param string $username The username.
+     *
+     * @return void
+     */
+    final public function setUsername(string $username)
+    {
+        if (\PerspectiveAPI\Connector::setUsername($this->getID(), $username) === true) {
+            $this->username = $username;
+        } else {
+            throw new \Exception('Failed to set username');
+        }
+
+    }//end setFirstName()
 
 
     /**
@@ -95,7 +127,15 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return void
      */
-    abstract public function setFirstName(string $firstName);
+    final public function setFirstName(string $firstName)
+    {
+        if (\PerspectiveAPI\Connector::setUserFirstName($this->getID(), $firstName) === true) {
+            $this->firstName = $firstName;
+        } else {
+            throw new \Exception('Failed to set user\'s first name');
+        }
+
+    }//end setFirstName()
 
 
     /**
@@ -105,7 +145,15 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return void
      */
-    abstract public function setLastName(string $lastName);
+    final public function setLastName(string $lastName)
+    {
+        if (\PerspectiveAPI\Connector::setUserLastName($this->getID(), $lastName) === true) {
+            $this->lastName = $lastName;
+        } else {
+            throw new \Exception('Failed to set user\'s last name');
+        }
+
+    }//end setLastName()
 
 
     /**
@@ -115,7 +163,13 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return void
      */
-    abstract public function addToGroup($groupid);
+    final public function addToGroup(string $groupid)
+    {
+        if (\PerspectiveAPI\Connector::addUserToGroup($this->getID(), $groupid) === false) {
+            throw new \Exception('Failed to add user to group');
+        }
+
+    }//end addToGroup()
 
 
     /**
@@ -125,7 +179,13 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return void
      */
-    abstract public function removeFromGroup($groupid);
+    final public function removeFromGroup(string $groupid)
+    {
+        if (\PerspectiveAPI\Connector::removeUserFromGroup($this->getID(), $groupid) === false) {
+            throw new \Exception('Failed to remove user from group');
+        }
+
+    }//end removeFromGroup()
 
 
     /**
@@ -133,7 +193,11 @@ abstract class User extends Object implements ReferenceInterface
      *
      * @return array
      */
-    abstract public function getGroups();
+    final public function getGroups()
+    {
+        return \PerspectiveAPI\Connector::getGroups($this->getID());
+
+    }//end getGroups()
 
 
 }//end class

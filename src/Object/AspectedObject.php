@@ -34,7 +34,11 @@ abstract class AspectedObject extends Object
      *
      * @return void
      */
-    abstract public function setAspect(array $aspect=null);
+    final public function setAspect(array $aspect=null)
+    {
+        $this->aspect = $aspect;
+
+    }//end setAspect()
 
 
     /**
@@ -42,7 +46,11 @@ abstract class AspectedObject extends Object
      *
      * @return array
      */
-    abstract public function getAspect();
+    final public function getAspect()
+    {
+        return $this->aspect;
+
+    }//end getAspect()
 
 
 }//end class

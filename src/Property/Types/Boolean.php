@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Boolean Class.
  */
-abstract class Boolean extends Property
+class Boolean extends Property
 {
 
 }//end class

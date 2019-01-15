@@ -15,7 +15,7 @@ use \PerspectiveAPI\Property\Types\Property as Property;
 /**
  * Text Class.
  */
-abstract class Text extends Property
+class Text extends Property
 {
 
 }//end class

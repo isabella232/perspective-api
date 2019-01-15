@@ -15,7 +15,7 @@ use \PerspectiveAPI\Storage\Types\Store as Store;
 /**
  * DataStore Class.
  */
-abstract class DataStore extends Store
+class DataStore extends Store
 {
 
     /**
@@ -26,7 +26,11 @@ abstract class DataStore extends Store
      *
      * @return object
      */
-    abstract public function createDataRecord(string $type=null, string $parent=null);
+    public function createDataRecord(string $type=null, string $parent=null)
+    {
+        return \PerspectiveAPI\Connector::createDataRecord($this->code, $type, $parent);
+
+    }//end createDataRecord()
 
 
     /**
@@ -36,7 +40,11 @@ abstract class DataStore extends Store
      *
      * @return null|object
      */
-    abstract public function getDataRecord(string $id);
+    public function getDataRecord(string $id)
+    {
+        return \PerspectiveAPI\Connector::getDataRecord($this->code, $id);
+
+    }//end getDataRecord()
 
 
     /**
@@ -47,7 +55,11 @@ abstract class DataStore extends Store
      *
      * @return null|object
      */
-    abstract public function getUniqueDataRecord(string $propertyid, string $value);
+    public function getUniqueDataRecord(string $propertyid, string $value)
+    {
+        return \PerspectiveAPI\Connector::getDataRecordByValue($this->code, $propertyid, $value);
+
+    }//end getUniqueDataRecord()
 
 
 }//end class

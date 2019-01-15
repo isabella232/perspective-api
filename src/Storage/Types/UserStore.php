@@ -15,7 +15,7 @@ use \PerspectiveAPI\Storage\Types\Store as Store;
 /**
  * UserStore Class.
  */
-abstract class UserStore extends Store
+class UserStore extends Store
 {
 
 
@@ -32,13 +32,16 @@ abstract class UserStore extends Store
      *
      * @return object
      */
-    abstract public function createUser(
+    public function createUser(
         string $username,
         string $firstName,
         string $lastName,
         string $type=null,
         array $groups=[]
-    );
+    ) {
+        return \PerspectiveAPI\Connector::createUser($this->code, $username, $firstName, $lastName, $type, $groups);
+
+    }//end createUser()
 
 
     /**
@@ -48,7 +51,11 @@ abstract class UserStore extends Store
      *
      * @return null|object
      */
-    abstract public function getGroup(string $id);
+    public function getGroup(string $id)
+    {
+        return \PerspectiveAPI\Connector::getGroup($this->code, $id);
+
+    }//end getGroup()
 
 
     /**
@@ -59,7 +66,11 @@ abstract class UserStore extends Store
      * @return null|object
      * @throws InvalidDataException When username is empty.
      */
-    abstract public function getUserByUsername(string $username);
+    public function getUserByUsername(string $username)
+    {
+        return \PerspectiveAPI\Connector::getUserByUsername($this->code, $username);
+
+    }//end getUserByUsername()
 
 
 }//end class

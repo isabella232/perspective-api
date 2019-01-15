@@ -11,9 +11,9 @@
 namespace PerspectiveAPI;
 
 /**
- * Email Interface.
+ * Email class.
  */
-interface EmailInterface
+class Email
 {
 
     /**
@@ -26,7 +26,11 @@ interface EmailInterface
      *
      * @return void
      */
-    public static function sendEmail(string $to, string $from, string $subject, string $message);
+    public static function sendEmail(string $to, string $from, string $subject, string $message)
+    {
+        \PerspectiveAPI\Connector::sendEmail($to, $from, $subject, $message);
+
+    }//end sendEmail()
 
 
-}//end interface
+}//end class
