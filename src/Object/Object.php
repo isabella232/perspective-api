@@ -51,7 +51,7 @@ abstract class Object
      */
     final public function getStorage()
     {
-        return $this->storage;
+        return $this->store;
 
     }//end getStorage()
 

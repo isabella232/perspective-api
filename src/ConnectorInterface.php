@@ -18,6 +18,7 @@ interface ConnectorInterface
 
     public static function getPropertyTypeClass(string $objectType, string $propertyCode);
 
+    public static function getReference(string $objectType, string $id, string $referenceCode);
     public static function addReference(string $objectType, string $id, string $referenceCode, $objects);
     public static function setReference(string $objectType, string $id, string $referenceCode, $objects);
     public static function deleteReference(string $objectType, string $id, string $referenceCode, $objects);
@@ -35,6 +36,10 @@ interface ConnectorInterface
     public static function getPropertyValue(string $objectType, string $id, string $propertyCode);
     public static function setPropertyValue(string $objectType, string $id, string $propertyCode, $value);
     public static function deletePropertyValue(string $objectType, string $id, string $propertyCode);
+
+    // return the list of IDs of children/parents.
+    public static function getChildren(string $objectType, string $id, int $depth=null);
+    public static function getParents(string $objectType, string $id, int $depth=null);
 
     // return true/false
     public static function getDataStoreExists(string $name);
@@ -62,7 +67,8 @@ interface ConnectorInterface
     public static function getUserByUsername(string $storeCode, string $username);
     public static function getUser(string $storeCode, string $id);
 
-    public static function getProject();
+    // returns project instance ID
+    public static function getProjectInstanceID();
 
     public static function login(string $id);
     public static function logout();
