@@ -63,6 +63,7 @@ abstract class Property
             $this->object = null;
         } else if ($owner instanceof \PerspectiveAPI\Object\Types\User
             || $owner instanceof \PerspectiveAPI\Object\Types\DataRecord
+            || $owner instanceof \PerspectiveAPI\Object\Types\ProjectInstance
         ) {
             $this->object = $owner;
         } else {
@@ -81,9 +82,15 @@ abstract class Property
      */
     public function getValue()
     {
+        $store     = ($this->object->getStorage() ?? null);
+        $storeCode = '';
+        if ($store !== null) {
+            $storeCode = $store->getCode();
+        }
+
         return \PerspectiveAPI\Connector::getPropertyValue(
             $this->object->getObjectType(),
-            $this->object->getStorage()->getCode(),
+            $storeCode,
             $this->object->getID(),
             $this->code
         );
@@ -102,9 +109,15 @@ abstract class Property
      */
     public function setValue($value)
     {
+        $store     = ($this->object->getStorage() ?? null);
+        $storeCode = '';
+        if ($store !== null) {
+            $storeCode = $store->getCode();
+        }
+
         \PerspectiveAPI\Connector::setPropertyValue(
             $this->object->getObjectType(),
-            $this->object->getStorage()->getCode(),
+            $storeCode,
             $this->object->getID(),
             $this->code,
             $value
@@ -122,9 +135,15 @@ abstract class Property
      */
     public function deleteValue()
     {
+        $store     = ($this->object->getStorage() ?? null);
+        $storeCode = '';
+        if ($store !== null) {
+            $code = $store->getCode();
+        }
+
         \PerspectiveAPI\Connector::deletePropertyValue(
             $this->object->getObjectType(),
-            $this->object->getStorage()->getCode(),
+            $storeCode,
             $this->object->getID(),
             $this->code
         );

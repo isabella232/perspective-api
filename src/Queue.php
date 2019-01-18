@@ -33,7 +33,7 @@ class Queue
         callable $successCallback=null,
         callable $failedCallback=null
     ) {
-        return \PerspectiveAPI\Connector::addQueueJob($to, $from, $subject, $message);
+        return \PerspectiveAPI\Connector::addQueueJob($queueNames, $data, $successCallback, $failedCallback);
 
     }//end addJob()
 

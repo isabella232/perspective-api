@@ -57,7 +57,7 @@ class DataStore extends Store
      */
     public function getDataRecord(string $id)
     {
-        $dataRecord = \PerspectiveAPI\Connector::getDataRecord('data', $id);
+        $dataRecord = \PerspectiveAPI\Connector::getDataRecord($this->code, $id);
         if ($dataRecord === null) {
             return null;
         }

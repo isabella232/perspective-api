@@ -62,7 +62,7 @@ class UserStore extends Store
         if ($user !== null) {
             return new \PerspectiveAPI\Object\Types\User(
                 $this,
-                $group['id'],
+                $user['id'],
                 $user['username'],
                 $user['firstName'],
                 $user['lastName']

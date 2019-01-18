@@ -112,7 +112,7 @@ class Authentication
                 self::$loggedIn = false;
             } else {
                 self::$user     = new \PerspectiveAPI\Object\Types\User(
-                    \PerspectiveAPI\StorageFactory::getUserStore($user['storeCode']),
+                    \PerspectiveAPI\Storage\StorageFactory::getUserStore($user['storeCode']),
                     $user['id'],
                     $user['username'],
                     $user['firstName'],
