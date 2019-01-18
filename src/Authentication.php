@@ -72,7 +72,7 @@ class Authentication
      */
     final public static function login(\PerspectiveAPI\Object\Types\User $user)
     {
-        if (\PerspectiveAPI\Connector::login($user->getID()) === true) {
+        if (\PerspectiveAPI\Connector::login($user->getID(), $user->getStorage()->getCode()) === true) {
             self::$user     = $user;
             self::$loggedIn = true;
         } else {
@@ -125,6 +125,18 @@ class Authentication
         return self::$loggedIn;
 
     }//end isLoggedIn()
+
+
+    /**
+     * Gets the secret key.
+     *
+     * @return string
+     */
+    public static function getSecretKey()
+    {
+        return \PerspectiveAPI\Connector::getSecretKey();
+
+    }//end getSecretKey()
 
 
 }//end class

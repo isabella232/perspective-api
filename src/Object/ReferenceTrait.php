@@ -28,7 +28,7 @@ trait ReferenceTrait
      */
     final public function getReference(string $referenceCode)
     {
-        return \PerspectiveAPI\Connector::getReference($this->getObjectType(), $this->getID(), $referenceCode);
+        return \PerspectiveAPI\Connector::getReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode);
 
     }//end getReference()
 
@@ -43,7 +43,7 @@ trait ReferenceTrait
      */
     final public function addReference(string $referenceCode, $objects)
     {
-        return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end addReference()
 
@@ -58,7 +58,7 @@ trait ReferenceTrait
      */
     final public function setReference(string $referenceCode, $objects)
     {
-        return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end setReference()
 
@@ -73,7 +73,7 @@ trait ReferenceTrait
      */
     final public function deleteReference(string $referenceCode, $objects)
     {
-        return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end deleteReference()
 

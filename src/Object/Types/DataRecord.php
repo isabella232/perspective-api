@@ -47,7 +47,7 @@ class DataRecord extends AspectedObject
      */
     public function getParents(int $depth=null)
     {
-        return \PerspectiveAPI\Connector::getParents($this->getObjectType(), $this->getID(), $depth);
+        return \PerspectiveAPI\Connector::getParents($this->getObjectType(), $this->store->getCode(), $this->getID(), $depth);
 
     }//end getParents()
 
@@ -61,7 +61,7 @@ class DataRecord extends AspectedObject
      */
     public function getChildren(int $depth=null)
     {
-        return \PerspectiveAPI\Connector::getChildren($this->getObjectType(), $this->getID(), $depth);
+        return \PerspectiveAPI\Connector::getChildren($this->getObjectType(), $this->store->getCode(), $this->getID(), $depth);
 
     }//end getChildren()
 

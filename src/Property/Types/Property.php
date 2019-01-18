@@ -83,6 +83,7 @@ abstract class Property
     {
         return \PerspectiveAPI\Connector::getPropertyValue(
             $this->object->getObjectType(),
+            $this->object->getStorage()->getCode(),
             $this->object->getID(),
             $this->code
         );
@@ -103,6 +104,7 @@ abstract class Property
     {
         \PerspectiveAPI\Connector::setPropertyValue(
             $this->object->getObjectType(),
+            $this->object->getStorage()->getCode(),
             $this->object->getID(),
             $this->code,
             $value
@@ -122,6 +124,7 @@ abstract class Property
     {
         \PerspectiveAPI\Connector::deletePropertyValue(
             $this->object->getObjectType(),
+            $this->object->getStorage()->getCode(),
             $this->object->getID(),
             $this->code
         );

@@ -58,7 +58,7 @@ class Group extends Object
      */
     public function getMembers()
     {
-        return \PerspectiveSandbox\Connector::getGroupMembers($this->getID());
+        return \PerspectiveSandbox\Connector::getGroupMembers($this->getID(), $this->store->getCode());
 
     }//end getMembers()
 
@@ -84,7 +84,7 @@ class Group extends Object
      */
     public function setName(string $name)
     {
-        if (\PerspectiveAPI\Connector::setGroupName($this->getID(), $name) === true) {
+        if (\PerspectiveAPI\Connector::setGroupName($this->getID(), $this->store->getCode(), $name) === true) {
             $this->groupName = $name;
         } else {
             throw new \Exception('Failed to set user group name');

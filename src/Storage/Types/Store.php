@@ -39,4 +39,16 @@ abstract class Store
     }//end __construct()
 
 
+    /**
+     * Gets the store code.
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+
+    }//end getCode()
+
+
 }//end class

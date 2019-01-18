@@ -111,7 +111,7 @@ class User extends Object
      */
     final public function setUsername(string $username)
     {
-        if (\PerspectiveAPI\Connector::setUsername($this->getID(), $username) === true) {
+        if (\PerspectiveAPI\Connector::setUsername($this->getID(), $this->store->getCode(), $username) === true) {
             $this->username = $username;
         } else {
             throw new \Exception('Failed to set username');
@@ -129,7 +129,7 @@ class User extends Object
      */
     final public function setFirstName(string $firstName)
     {
-        if (\PerspectiveAPI\Connector::setUserFirstName($this->getID(), $firstName) === true) {
+        if (\PerspectiveAPI\Connector::setUserFirstName($this->getID(), $this->store->getCode(), $firstName) === true) {
             $this->firstName = $firstName;
         } else {
             throw new \Exception('Failed to set user\'s first name');
@@ -147,7 +147,7 @@ class User extends Object
      */
     final public function setLastName(string $lastName)
     {
-        if (\PerspectiveAPI\Connector::setUserLastName($this->getID(), $lastName) === true) {
+        if (\PerspectiveAPI\Connector::setUserLastName($this->getID(), $this->store->getCode(), $lastName) === true) {
             $this->lastName = $lastName;
         } else {
             throw new \Exception('Failed to set user\'s last name');
@@ -181,7 +181,7 @@ class User extends Object
      */
     final public function removeFromGroup(string $groupid)
     {
-        if (\PerspectiveAPI\Connector::removeUserFromGroup($this->getID(), $groupid) === false) {
+        if (\PerspectiveAPI\Connector::removeUserFromGroup($this->getID(), $this->store->getCode(), $groupid) === false) {
             throw new \Exception('Failed to remove user from group');
         }
 
@@ -195,7 +195,7 @@ class User extends Object
      */
     final public function getGroups()
     {
-        return \PerspectiveAPI\Connector::getGroups($this->getID());
+        return \PerspectiveAPI\Connector::getUserGroups($this->getID(), $this->store->getCode());
 
     }//end getGroups()
 
