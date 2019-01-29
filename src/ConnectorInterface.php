@@ -473,4 +473,11 @@ interface ConnectorInterface
     public static function setSessionValue(string $key, $value);
 
 
+    /**
+     * Checks if the request is in the simulator.
+     *
+     * @return boolean
+     */
+    public static function isSimulated();
+
 }//end interface

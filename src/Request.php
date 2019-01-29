@@ -30,4 +30,16 @@ class Request
     }//end getProjectInstance()
 
 
+    /**
+     * Flag for is simulator.
+     *
+     * @return boolean
+     */
+    public static function isSimulated()
+    {
+        return \PerspectiveAPI\Connector::isSimulated();
+
+    }//end isSimulated()
+
+
 }//end class
