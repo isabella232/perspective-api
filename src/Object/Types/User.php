@@ -165,7 +165,7 @@ class User extends Object
      */
     final public function addToGroup(string $groupid)
     {
-        if (\PerspectiveAPI\Connector::addUserToGroup($this->getID(), $groupid) === false) {
+        if (\PerspectiveAPI\Connector::addUserToGroup($this->getID(), $this->store->getCode(), $groupid) === false) {
             throw new \Exception('Failed to add user to group');
         }
 
