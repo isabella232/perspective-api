@@ -56,11 +56,11 @@ class User extends Object
         }
 
         if ($firstName !== null) {
-            $this->setFirstName($firstName);
+            $this->firstName = $firstName;
         }
 
         if ($lastName !== null) {
-            $this->setLastName($lastName);
+            $this->lastName = $lastName;
         }
 
     }//end __construct()
