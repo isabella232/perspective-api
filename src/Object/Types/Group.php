@@ -58,7 +58,7 @@ class Group extends Object
      */
     public function getMembers()
     {
-        return \PerspectiveSandbox\Connector::getGroupMembers($this->getID(), $this->store->getCode());
+        return \PerspectiveAPI\Connector::getGroupMembers($this->getID(), $this->store->getCode());
 
     }//end getMembers()
 
