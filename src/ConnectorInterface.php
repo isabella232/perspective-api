@@ -306,7 +306,7 @@ interface ConnectorInterface
 
 
     /**
-     * Creates a user and assign it to user groups. Returns created user object.
+     * Creates a user and assign it to user groups. Returns created userid.
      *
      * @param string $storeCode The store code.
      * @param string $username  The username of user.
@@ -323,7 +323,7 @@ interface ConnectorInterface
 
 
     /**
-     * Creates a user group and assign it to user groups. Returns created user group object.
+     * Creates a user group and assign it to user groups. Returns created user groupid.
      *
      * @param string $storeCode The store code.
      * @param string $groupName The name of user group.
