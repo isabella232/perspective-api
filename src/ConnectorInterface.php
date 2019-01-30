@@ -334,7 +334,7 @@ interface ConnectorInterface
      *
      * @return string
      */
-    public static function createGroup(string $storeCode, string $groupName, string $type, array $groups=[]);
+    public static function createGroup(string $storeCode, string $groupName, string $type=null, array $groups=[]);
 
 
     /**
