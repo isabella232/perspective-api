@@ -42,4 +42,28 @@ class Request
     }//end isSimulated()
 
 
+    /**
+     * Returns true if the request is in a read-only mode.
+     *
+     * @return boolean
+     */
+    public static function isReadOnly()
+    {
+        return \PerspectiveAPI\Connector::isReadOnly();
+
+    }//end isReadOnly()
+
+
+    /**
+     * Suppresses 404 response code
+     *
+     * @return void
+     */
+    public static function suppress404()
+    {
+        \PerspectiveAPI\Connector::suppress404();
+
+    }//end suppress404()
+
+
 }//end class
