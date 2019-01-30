@@ -362,6 +362,15 @@ interface ConnectorInterface
     /**
      * Gets a user from a user store by userid.
      *
+     * The result array should include the following fields: [
+     *  'id'        => USER_ENTITYID
+     *  'username'  => USERNAME
+     *  'typeClass' => null
+     *  'groups'    => GROUP_ENTITYIDS
+     *  'firstName' => FIRST_NAME
+     *  'lastName'  => LAST_NAME
+     * ]
+     *
      * @param string $storeCode The user store's code.
      * @param string $id        The users id.
      *
