@@ -138,7 +138,7 @@ abstract class Property
         $store     = ($this->object->getStorage() ?? null);
         $storeCode = '';
         if ($store !== null) {
-            $code = $store->getCode();
+            $storeCode = $store->getCode();
         }
 
         \PerspectiveAPI\Connector::deletePropertyValue(
