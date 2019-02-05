@@ -441,6 +441,8 @@ interface ConnectorInterface
      * @param string $storeCode The user store's code.
      *
      * @return boolean
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown when user is not found.
      */
     public static function login(string $id, string $storeCode);
 
@@ -456,7 +458,7 @@ interface ConnectorInterface
     /**
      * Gets Authentication secret key.
      *
-     * @return string
+     * @return string|null
      */
     public static function getSecretKey();
 
@@ -466,7 +468,7 @@ interface ConnectorInterface
      *
      * The returned array should include the same list of fields from getUser() + 'storeCode'.
      *
-     * @return array
+     * @return array|null
      */
     public static function getLoggedInUser();
 
