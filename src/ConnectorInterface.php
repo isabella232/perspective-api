@@ -481,7 +481,7 @@ interface ConnectorInterface
      * @param string $subject The subject of the email.
      * @param string $message The email content.
      *
-     * @return void
+     * @return boolean
      */
     public static function sendEmail(string $to, string $from, string $subject, string $message);
 
