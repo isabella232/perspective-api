@@ -24,6 +24,7 @@ interface ConnectorInterface
      * @param string $propertyCode The property code.
      *
      * @return string
+     * @throws InvalidDataException Thrown when object type or property code is invalid.
      */
     public static function getPropertyTypeClass(string $objectType, string $propertyCode);
 
@@ -37,6 +38,8 @@ interface ConnectorInterface
      * @param string $referenceCode The reference code.
      *
      * @return mixed
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown when reference code is not found.
      */
     public static function getReference(string $objectType, string $id, string $storeCode, string $referenceCode);
 
@@ -52,6 +55,8 @@ interface ConnectorInterface
      *                              reference points to.
      *
      * @return mixed
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown when reference code is not found.
      */
     public static function addReference(string $objectType, string $id, string $storeCode, string $referenceCode, $objects);
 
@@ -67,6 +72,8 @@ interface ConnectorInterface
      *                              reference points to.
      *
      * @return mixed
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown when reference code is not found.
      */
     public static function setReference(string $objectType, string $id, string $storeCode, string $referenceCode, $objects);
 
@@ -82,6 +89,8 @@ interface ConnectorInterface
      *                              reference points to.
      *
      * @return mixed
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown when reference code is not found.
      */
     public static function deleteReference(string $objectType, string $id, string $storeCode, string $referenceCode, $objects);
 
@@ -93,6 +102,8 @@ interface ConnectorInterface
      * @param string $storeCode The store code.
      *
      * @return array
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown group id is not found.
      */
     public static function getGroupMembers(string $id, string $storeCode);
 
@@ -105,6 +116,8 @@ interface ConnectorInterface
      * @param string $name      The name of the group to set.
      *
      * @return void
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown group id is not found.
      */
     public static function setGroupName(string $id, string $storeCode, $name);
 
@@ -117,6 +130,8 @@ interface ConnectorInterface
      * @param string $username  The username to set.
      *
      * @return void
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown user id is not found.
      */
     public static function setUsername(string $id, string $storeCode, string $username);
 
@@ -129,6 +144,8 @@ interface ConnectorInterface
      * @param string $firstName The first name of the user.
      *
      * @return void
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown user id is not found.
      */
     public static function setUserFirstName(string $id, string $storeCode, string $firstName);
 
@@ -141,6 +158,8 @@ interface ConnectorInterface
      * @param string $lastName  The last name of the user.
      *
      * @return void
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown user id is not found.
      */
     public static function setUserLastName(string $id, string $storeCode, string $lastName);
 
@@ -152,6 +171,8 @@ interface ConnectorInterface
      * @param string $storeCode The store code.
      *
      * @return array
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown group id is not found.
      */
     public static function getUserGroups(string $id, string $storeCode);
 
@@ -164,6 +185,9 @@ interface ConnectorInterface
      * @param mixed  $groupid   Parent user groups to assign the user to.
      *
      * @return void
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown user id is not found.
+     * @throws InvalidDataException Thrown group id is not found.
      */
     public static function addUserToGroup(string $id, string $storeCode, string $groupid);
 
@@ -176,6 +200,9 @@ interface ConnectorInterface
      * @param mixed  $groupid   Parent user groups to remove the user from.
      *
      * @return void
+     * @throws InvalidDataException Thrown when store code is not found.
+     * @throws InvalidDataException Thrown user id is not found.
+     * @throws InvalidDataException Thrown group id is not found.
      */
     public static function removeUserFromGroup(string $id, string $storeCode, string $groupid);
 
@@ -189,6 +216,7 @@ interface ConnectorInterface
      * @param string $propertyCode The property code to get value.
      *
      * @return mixed
+     * @throws InvalidDataException Thrown property code is not found.
      */
     public static function getPropertyValue(string $objectType, string $storeCode, string $id, string $propertyCode);
 
@@ -203,6 +231,7 @@ interface ConnectorInterface
      * @param mixed  $value        The value to set.
      *
      * @return void
+     * @throws InvalidDataException Thrown property code is not found.
      */
     public static function setPropertyValue(string $objectType, string $storeCode, string $id, string $propertyCode, $value);
 
@@ -216,6 +245,7 @@ interface ConnectorInterface
      * @param string $propertyCode The property code to delete value.
      *
      * @return mixed
+     * @throws InvalidDataException Thrown property code is not found.
      */
     public static function deletePropertyValue(string $objectType, string $storeCode, string $id, string $propertyCode);
 
@@ -274,6 +304,9 @@ interface ConnectorInterface
      * @param string $parent    The ID of the parent data record.
      *
      * @return string
+     * @throws InvalidDataException     Thrown when store code is not found.
+     * @throws InvalidDataException     Thrown when parent data record is not found.
+     * @throws InvalidArgumentException Thrown when parent data record ID is not valid.
      */
     public static function createDataRecord(string $storeCode, string $customType, string $parent=null);
 
@@ -287,6 +320,8 @@ interface ConnectorInterface
      * @param string $id        The ID of the data record.
      *
      * @return null|array
+     * @throws InvalidDataException     Thrown when store code is not found.
+     * @throws InvalidArgumentException Thrown when data record ID is not valid.
      */
     public static function getDataRecord(string $storeCode, string $id);
 
@@ -301,6 +336,10 @@ interface ConnectorInterface
      * @param string $value      The value of the unique property.
      *
      * @return null|array
+     * @throws InvalidArgumentException Thrown when value is not valid.
+     * @throws InvalidDataException     Thrown when property code is not found.
+     * @throws InvalidDataException     Thrown when non-unique property type is used.
+     * @throws InvalidDataException     Thrown when store code is not found.
      */
     public static function getDataRecordByValue(string $storeCode, string $propertyid, string $value);
 
@@ -318,6 +357,9 @@ interface ConnectorInterface
      *                          created under root user group.
      *
      * @return string
+     * @throws InvalidDataException     Thrown when store code is not found.
+     * @throws InvalidDataException     Thrown when parent group belongs to different store.
+     * @throws InvalidArgumentException Thrown when username is not valid.
      */
     public static function createUser(string $storeCode, string $username, string $firstName, string $lastName, string $type=null, array $groups=[]);
 
@@ -333,6 +375,9 @@ interface ConnectorInterface
      *                          created under root user group.
      *
      * @return string
+     * @throws InvalidDataException     Thrown when store code is not found.
+     * @throws InvalidDataException     Thrown when parent group belongs to different store.
+     * @throws InvalidArgumentException Thrown when group name is not valid.
      */
     public static function createGroup(string $storeCode, string $groupName, string $type=null, array $groups=[]);
 
@@ -344,6 +389,7 @@ interface ConnectorInterface
      * @param string $id        The id of the group.
      *
      * @return array|null
+     * @throws InvalidDataException Thrown when store code is not found.
      */
     public static function getGroup(string $storeCode, string $id);
 
@@ -355,6 +401,7 @@ interface ConnectorInterface
      * @param string $username  The users username.
      *
      * @return array|null
+     * @throws InvalidDataException Thrown when store code is not found.
      */
     public static function getUserByUsername(string $storeCode, string $username);
 
@@ -375,6 +422,7 @@ interface ConnectorInterface
      * @param string $id        The users id.
      *
      * @return array|null
+     * @throws InvalidDataException Thrown when store code is not found.
      */
     public static function getUser(string $storeCode, string $id);
 
@@ -383,7 +431,6 @@ interface ConnectorInterface
      * Returns the projects instance id.
      *
      * @return string
-     * @throws \Exception When fails to create new deployment object.
      */
     public static function getProjectInstanceID();
 
@@ -444,6 +491,7 @@ interface ConnectorInterface
      * @param string $type       The type of the object we are creating.
      *
      * @return string
+     * @throws InvalidDataException Thrown when custom type does not exist.
      */
     public static function getCustomTypeClassByName(string $objectType, string $type);
 
