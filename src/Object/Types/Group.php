@@ -84,11 +84,8 @@ class Group extends Object
      */
     public function setName(string $name)
     {
-        if (\PerspectiveAPI\Connector::setGroupName($this->getID(), $this->store->getCode(), $name) === true) {
-            $this->groupName = $name;
-        } else {
-            throw new \Exception('Failed to set user group name');
-        }
+        \PerspectiveAPI\Connector::setGroupName($this->getID(), $this->store->getCode(), $name);
+        $this->groupName = $name;
 
     }//end setName()
 

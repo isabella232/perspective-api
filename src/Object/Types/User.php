@@ -111,11 +111,8 @@ class User extends Object
      */
     final public function setUsername(string $username)
     {
-        if (\PerspectiveAPI\Connector::setUsername($this->getID(), $this->store->getCode(), $username) === true) {
-            $this->username = $username;
-        } else {
-            throw new \Exception('Failed to set username');
-        }
+        \PerspectiveAPI\Connector::setUsername($this->getID(), $this->store->getCode(), $username);
+        $this->username = $username;
 
     }//end setFirstName()
 
@@ -129,11 +126,8 @@ class User extends Object
      */
     final public function setFirstName(string $firstName)
     {
-        if (\PerspectiveAPI\Connector::setUserFirstName($this->getID(), $this->store->getCode(), $firstName) === true) {
-            $this->firstName = $firstName;
-        } else {
-            throw new \Exception('Failed to set user\'s first name');
-        }
+        \PerspectiveAPI\Connector::setUserFirstName($this->getID(), $this->store->getCode(), $firstName);
+        $this->firstName = $firstName;
 
     }//end setFirstName()
 
@@ -147,11 +141,8 @@ class User extends Object
      */
     final public function setLastName(string $lastName)
     {
-        if (\PerspectiveAPI\Connector::setUserLastName($this->getID(), $this->store->getCode(), $lastName) === true) {
-            $this->lastName = $lastName;
-        } else {
-            throw new \Exception('Failed to set user\'s last name');
-        }
+        \PerspectiveAPI\Connector::setUserLastName($this->getID(), $this->store->getCode(), $lastName);
+        $this->lastName = $lastName;
 
     }//end setLastName()
 
@@ -165,9 +156,7 @@ class User extends Object
      */
     final public function addToGroup(string $groupid)
     {
-        if (\PerspectiveAPI\Connector::addUserToGroup($this->getID(), $this->store->getCode(), $groupid) === false) {
-            throw new \Exception('Failed to add user to group');
-        }
+        \PerspectiveAPI\Connector::addUserToGroup($this->getID(), $this->store->getCode(), $groupid);
 
     }//end addToGroup()
 
@@ -181,9 +170,7 @@ class User extends Object
      */
     final public function removeFromGroup(string $groupid)
     {
-        if (\PerspectiveAPI\Connector::removeUserFromGroup($this->getID(), $this->store->getCode(), $groupid) === false) {
-            throw new \Exception('Failed to remove user from group');
-        }
+        \PerspectiveAPI\Connector::removeUserFromGroup($this->getID(), $this->store->getCode(), $groupid);
 
     }//end removeFromGroup()
 
