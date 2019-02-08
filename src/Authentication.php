@@ -70,7 +70,7 @@ class Authentication
      *
      * @return void
      */
-    final public static function login(\PerspectiveAPI\Object\Types\User $user)
+    final public static function login(\PerspectiveAPI\Class\Types\User $user)
     {
         if (\PerspectiveAPI\Connector::login($user->getID(), $user->getStorage()->getCode()) === true) {
             self::$user     = $user;
@@ -111,7 +111,7 @@ class Authentication
             if ($user === null) {
                 self::$loggedIn = false;
             } else {
-                self::$user     = new \PerspectiveAPI\Object\Types\User(
+                self::$user     = new \PerspectiveAPI\Class\Types\User(
                     \PerspectiveAPI\Storage\StorageFactory::getUserStore($user['storeCode']),
                     $user['id'],
                     $user['username'],

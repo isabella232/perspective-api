@@ -1,6 +1,6 @@
 <?php
 /**
- * Object base class.
+ * AbstractObject base class.
  *
  * @package    Perspective
  * @subpackage API
@@ -8,12 +8,12 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Object;
+namespace PerspectiveAPI\Class;
 
 /**
  * DataRecord Class.
  */
-abstract class Object
+abstract class AbstractObject
 {
 
 
@@ -140,13 +140,13 @@ abstract class Object
      */
     final public function getObjectType()
     {
-        if ($this instanceof \PerspectiveAPI\Object\Types\DataRecord) {
+        if ($this instanceof \PerspectiveAPI\Class\Types\DataRecord) {
             $objectType = 'data';
-        } else if ($this instanceof \PerspectiveAPI\Object\Types\User
-            || $this instanceof \PerspectiveAPI\Object\Types\Group
+        } else if ($this instanceof \PerspectiveAPI\Class\Types\User
+            || $this instanceof \PerspectiveAPI\Class\Types\Group
         ) {
             $objectType = 'user';
-        } else if ($this instanceof \PerspectiveAPI\Object\Types\ProjectInstance) {
+        } else if ($this instanceof \PerspectiveAPI\Class\Types\ProjectInstance) {
             $objectType = 'project';
         }
 

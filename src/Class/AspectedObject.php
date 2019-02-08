@@ -1,6 +1,6 @@
 <?php
 /**
- * Object base class.
+ * AbstractObject base class.
  *
  * @package    Perspective
  * @subpackage API
@@ -8,14 +8,14 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Object;
+namespace PerspectiveAPI\Class;
 
-use \PerspectiveAPI\Object\Object as Object;
+use \PerspectiveAPI\Class\AbstractObject as AbstractObject;
 
 /**
  * DataRecord Class.
  */
-abstract class AspectedObject extends Object
+abstract class AspectedObject extends AbstractObject
 {
 
 

@@ -41,7 +41,7 @@ class UserStore extends Store
     ) {
         $id = \PerspectiveAPI\Connector::createUser($this->code, $username, $firstName, $lastName, $type, $groups);
         if ($id !== null) {
-            return new \PerspectiveAPI\Object\Types\User($this, $id, $username, $firstName, $lastName);
+            return new \PerspectiveAPI\Class\Types\User($this, $id, $username, $firstName, $lastName);
         }
 
         throw new \Exception('Failed to create a new user');
@@ -60,7 +60,7 @@ class UserStore extends Store
     {
         $user = \PerspectiveAPI\Connector::getUser($this->code, $id);
         if ($user !== null) {
-            return new \PerspectiveAPI\Object\Types\User(
+            return new \PerspectiveAPI\Class\Types\User(
                 $this,
                 $user['id'],
                 $user['username'],
@@ -86,7 +86,7 @@ class UserStore extends Store
     {
         $user = \PerspectiveAPI\Connector::getUserByUsername($this->code, $username);
         if ($user !== null) {
-            return new \PerspectiveAPI\Object\Types\User(
+            return new \PerspectiveAPI\Class\Types\User(
                 $this,
                 $user['id'],
                 $user['username'],
@@ -118,7 +118,7 @@ class UserStore extends Store
     ) {
         $id = \PerspectiveAPI\Connector::createGroup($this->code, $groupName, $type, $groups);
         if ($id !== null) {
-            return new \PerspectiveAPI\Object\Types\Group($this, $id, $groupName);
+            return new \PerspectiveAPI\Class\Types\Group($this, $id, $groupName);
         }
 
         throw new \Exception('Failed to create a new user group');
@@ -137,7 +137,7 @@ class UserStore extends Store
     {
         $group = \PerspectiveAPI\Connector::getGroup($this->code, $id);
         if ($group !== null) {
-            return new \PerspectiveAPI\Object\Types\Group(
+            return new \PerspectiveAPI\Class\Types\Group(
                 $this,
                 $group['id'],
                 $group['groupName']

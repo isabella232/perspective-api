@@ -10,7 +10,7 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Object;
+namespace PerspectiveAPI\Class;
 
 /**
  * ReferenceTrait

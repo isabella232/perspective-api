@@ -61,9 +61,9 @@ abstract class Property
             || $owner instanceof \PerspectiveAPI\Storage\Types\DataStore
         ) {
             $this->object = null;
-        } else if ($owner instanceof \PerspectiveAPI\Object\Types\User
-            || $owner instanceof \PerspectiveAPI\Object\Types\DataRecord
-            || $owner instanceof \PerspectiveAPI\Object\Types\ProjectInstance
+        } else if ($owner instanceof \PerspectiveAPI\Class\Types\User
+            || $owner instanceof \PerspectiveAPI\Class\Types\DataRecord
+            || $owner instanceof \PerspectiveAPI\Class\Types\ProjectInstance
         ) {
             $this->object = $owner;
         } else {

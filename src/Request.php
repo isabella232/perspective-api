@@ -23,7 +23,7 @@ class Request
      */
     public static function getProjectInstance()
     {
-        return new \PerspectiveAPI\Object\Types\ProjectInstance(
+        return new \PerspectiveAPI\Class\Types\ProjectInstance(
             \PerspectiveAPI\Connector::getProjectInstanceID()
         );
 

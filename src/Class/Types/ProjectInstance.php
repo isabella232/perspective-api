@@ -10,14 +10,14 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Object\Types;
+namespace PerspectiveAPI\Class\Types;
 
-use \PerspectiveAPI\Object\Object as Object;
+use \PerspectiveAPI\Class\AbstractObject as AbstractObject;
 
 /**
  * ProjectInstance Class.
  */
-class ProjectInstance extends Object
+class ProjectInstance extends AbstractObject
 {
 
 
