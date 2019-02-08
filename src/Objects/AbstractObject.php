@@ -8,7 +8,7 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Class;
+namespace PerspectiveAPI\Objects;
 
 /**
  * DataRecord Class.
@@ -140,13 +140,13 @@ abstract class AbstractObject
      */
     final public function getObjectType()
     {
-        if ($this instanceof \PerspectiveAPI\Class\Types\DataRecord) {
+        if ($this instanceof \PerspectiveAPI\Objects\Types\DataRecord) {
             $objectType = 'data';
-        } else if ($this instanceof \PerspectiveAPI\Class\Types\User
-            || $this instanceof \PerspectiveAPI\Class\Types\Group
+        } else if ($this instanceof \PerspectiveAPI\Objects\Types\User
+            || $this instanceof \PerspectiveAPI\Objects\Types\Group
         ) {
             $objectType = 'user';
-        } else if ($this instanceof \PerspectiveAPI\Class\Types\ProjectInstance) {
+        } else if ($this instanceof \PerspectiveAPI\Objects\Types\ProjectInstance) {
             $objectType = 'project';
         }
 

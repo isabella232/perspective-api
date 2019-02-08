@@ -8,10 +8,10 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Class\Types;
+namespace PerspectiveAPI\Objects\Types;
 
-use \PerspectiveAPI\Class\AspectedObject as AspectedObject;
-use \PerspectiveAPI\Class\ReferenceTrait as ReferenceTrait;
+use \PerspectiveAPI\Objects\AspectedObject as AspectedObject;
+use \PerspectiveAPI\Objects\ReferenceTrait as ReferenceTrait;
 use \PerspectiveAPI\Storage\Types\DataStore as DataStore;
 
 /**

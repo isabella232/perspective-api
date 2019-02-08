@@ -8,9 +8,9 @@
  * @copyright  2019 Squiz Pty Ltd (ABN 77 084 670 600)
  */
 
-namespace PerspectiveAPI\Class;
+namespace PerspectiveAPI\Objects;
 
-use \PerspectiveAPI\Class\AbstractObject as AbstractObject;
+use \PerspectiveAPI\Objects\AbstractObject as AbstractObject;
 
 /**
  * DataRecord Class.
