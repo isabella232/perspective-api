@@ -512,27 +512,6 @@ interface ConnectorInterface
 
 
     /**
-     * Gets Session value.
-     *
-     * @param string $key The session index.
-     *
-     * @return mixed
-     */
-    public static function getSessionValue(string $key);
-
-
-    /**
-     * Sets Session value.
-     *
-     * @param string $key   The session index.
-     * @param mixed  $value The value to set.
-     *
-     * @return mixed
-     */
-    public static function setSessionValue(string $key, $value);
-
-
-    /**
      * Checks if the request is in the simulator.
      *
      * @return boolean
