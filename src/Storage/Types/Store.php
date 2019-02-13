@@ -51,4 +51,17 @@ abstract class Store
     }//end getCode()
 
 
+    /**
+     * Gets the store code.
+     *
+     * @return string
+     */
+    public function namespaceCode(string $code)
+    {
+        $projectCode = dirname($this->code);
+        return $projectCode.'/'.$code;
+
+    }//end getCode()
+
+
 }//end class

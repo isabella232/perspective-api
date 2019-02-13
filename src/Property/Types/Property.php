@@ -92,7 +92,7 @@ abstract class Property
             $this->object->getObjectType(),
             $storeCode,
             $this->object->getID(),
-            $this->code
+            $store->namespaceCode($this->code)
         );
 
     }//end getValue()
@@ -119,7 +119,7 @@ abstract class Property
             $this->object->getObjectType(),
             $storeCode,
             $this->object->getID(),
-            $this->code,
+            $store->namespaceCode($this->code),
             $value
         );
 
@@ -145,7 +145,7 @@ abstract class Property
             $this->object->getObjectType(),
             $storeCode,
             $this->object->getID(),
-            $this->code
+            $store->namespaceCode($this->code)
         );
 
     }//end deleteValue()

@@ -47,6 +47,9 @@ class StorageFactory
      */
     public static function getDataStore(string $name)
     {
+        $projectCode = str_replace('\Framework\StorageFactory', '', static::class);
+        $name        = str_replace('\\', '/', $projectCode).'/'.$name;
+
         if (isset(self::$stores['data'][$name]) === true) {
             return self::$stores['data'][$name];
         }
@@ -70,6 +73,9 @@ class StorageFactory
      */
     public static function getUserStore(string $name)
     {
+        $projectCode = str_replace('\Framework\StorageFactory', '', static::class);
+        $name        = str_replace('\\', '/', $projectCode).'/'.$name;
+
         if (isset(self::$stores['user'][$name]) === true) {
             return self::$stores['user'][$name];
         }
