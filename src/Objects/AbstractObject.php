@@ -125,7 +125,7 @@ abstract class AbstractObject
     {
         $propertyTypeClass = \PerspectiveAPI\Connector::getPropertyTypeClass(
             $this->getObjectType(),
-            $this->store->namespaceCode($propertyCode)
+            $this->store->getNamespace().'/'.$propertyCode
         );
         if ($propertyTypeClass === null) {
             throw new \Exception('Unknown property code');

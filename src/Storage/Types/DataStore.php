@@ -29,7 +29,10 @@ class DataStore extends Store
      */
     public function createDataRecord(string $type=null, string $parent=null)
     {
-        $type      = $this->namespaceCode($type);
+        if ($type !== null) {
+            $type = $this->namespace.'/'.$type;
+        }
+
         $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName('data', $type);
         if ($typeClass === null) {
             throw new \Exception('Unknown custom data record type to create');
@@ -82,7 +85,7 @@ class DataStore extends Store
      */
     public function getUniqueDataRecord(string $propertyid, string $value)
     {
-        $propertyid = $this->namespaceCode($propertyid);
+        $propertyid = $this->namespace.'/'.$propertyid;
         $dataRecord = \PerspectiveAPI\Connector::getDataRecordByValue($this->code, $propertyid, $value);
         if ($dataRecord === null) {
             return null;

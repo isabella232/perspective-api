@@ -27,20 +27,12 @@ abstract class Property
      *
      * @var string
      */
-    protected $code = null;
+    protected $id = null;
 
     /**
-     * The object (page, user etc) or NULL for no object context.
-     *
-     * Important to stay private as this has been validated on instantiation.
-     *
-     * Also private so that we can throw an error when its used out of context.
-     * E.g calling DataStore->property('integer')->increment() is out of context.
-     * E.g calling DataStore->getDataRecord->property('integer')->increment() is in context.
+     * The object owner (dataRecord, user etc)
      *
      * @var object
-     * @see $this->getObject()
-     * @see $this->getObjectid()
      */
     protected $object = null;
 
@@ -56,12 +48,7 @@ abstract class Property
      */
     public function __construct($owner, string $propertyCode)
     {
-        // We need to validate the owner instances before calling validateConstructor.
-        if ($owner instanceof \PerspectiveAPI\Storage\Types\UserStore
-            || $owner instanceof \PerspectiveAPI\Storage\Types\DataStore
-        ) {
-            $this->object = null;
-        } else if ($owner instanceof \PerspectiveAPI\Objects\Types\User
+        if ($owner instanceof \PerspectiveAPI\Objects\Types\User
             || $owner instanceof \PerspectiveAPI\Objects\Types\DataRecord
             || $owner instanceof \PerspectiveAPI\Objects\Types\ProjectInstance
         ) {
@@ -70,7 +57,7 @@ abstract class Property
             throw new \Exception(_('Invalid owner object in property constructor'));
         }
 
-        $this->code = $propertyCode;
+        $this->id = $propertyCode;
 
     }//end __construct()
 
@@ -82,17 +69,13 @@ abstract class Property
      */
     public function getValue()
     {
-        $store     = ($this->object->getStorage() ?? null);
-        $storeCode = '';
-        if ($store !== null) {
-            $storeCode = $store->getCode();
-        }
+        $store = $this->object->getStorage();
 
         return \PerspectiveAPI\Connector::getPropertyValue(
             $this->object->getObjectType(),
-            $storeCode,
+            $store->getCode(),
             $this->object->getID(),
-            $store->namespaceCode($this->code)
+            $store->getNamespace().'/'.$this->id
         );
 
     }//end getValue()
@@ -109,17 +92,12 @@ abstract class Property
      */
     public function setValue($value)
     {
-        $store     = ($this->object->getStorage() ?? null);
-        $storeCode = '';
-        if ($store !== null) {
-            $storeCode = $store->getCode();
-        }
-
+        $store = $this->object->getStorage();
         \PerspectiveAPI\Connector::setPropertyValue(
             $this->object->getObjectType(),
-            $storeCode,
+            $store->getCode(),
             $this->object->getID(),
-            $store->namespaceCode($this->code),
+            $store->getNamespace().'/'.$this->id,
             $value
         );
 
@@ -135,17 +113,13 @@ abstract class Property
      */
     public function deleteValue()
     {
-        $store     = ($this->object->getStorage() ?? null);
-        $storeCode = '';
-        if ($store !== null) {
-            $storeCode = $store->getCode();
-        }
+        $store = $this->object->getStorage();
 
         \PerspectiveAPI\Connector::deletePropertyValue(
             $this->object->getObjectType(),
-            $storeCode,
+            $store->getCode(),
             $this->object->getID(),
-            $store->namespaceCode($this->code)
+            $store->getNamespace().'/'.$this->id
         );
 
     }//end deleteValue()

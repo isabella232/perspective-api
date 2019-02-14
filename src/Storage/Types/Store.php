@@ -18,25 +18,52 @@ abstract class Store
 {
 
     /**
+     * The store id.
+     *
+     * @var string|null
+     */
+    protected $id = null;
+
+    /**
+     * The store namespace.
+     *
+     * @var string|null
+     */
+    protected $namespace = null;
+
+     /**
      * The store code.
      *
      * @var string|null
      */
     protected $code = null;
 
-
     /**
      * Constructor for Store Class.
      *
-     * @param string $code The code of the store.
+     * @param string $storeid The storeid.
      *
      * @return void
      */
-    public function __construct(string $code)
+    public function __construct(string $namespace, string $storeid)
     {
-        $this->code = $code;
+        $this->id        = $storeid;
+        $this->namespace = $namespace;
+        $this->code      = $this->namespace.'/'.$this->id;
 
     }//end __construct()
+
+
+    /**
+     * Gets the store id.
+     *
+     * @return string
+     */
+    public function getID()
+    {
+        return $this->id;
+
+    }//end getId()
 
 
     /**
@@ -52,16 +79,15 @@ abstract class Store
 
 
     /**
-     * Gets the store code.
+     * Gets the store namespace.
      *
      * @return string
      */
-    public function namespaceCode(string $code)
+    public function getNamespace()
     {
-        $projectCode = dirname($this->code);
-        return $projectCode.'/'.$code;
+        return $this->namespace;
 
-    }//end getCode()
+    }//end getNamespace()
 
 
 }//end class

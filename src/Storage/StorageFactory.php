@@ -41,22 +41,23 @@ class StorageFactory
     /**
      * Gets the data store object.
      *
-     * @param string $name The data store name.
+     * @param string $storeid The data storeid.
      *
      * @return null|object
      */
-    public static function getDataStore(string $name)
+    public static function getDataStore(string $storeid)
     {
-        $projectCode = str_replace('\Framework\StorageFactory', '', static::class);
-        $name        = str_replace('\\', '/', $projectCode).'/'.$name;
+        $namespace = str_replace('\Framework\StorageFactory', '', static::class);
+        $namespace = str_replace('\\', '/', $namespace);
+        $storeCode = $namespace.'/'.$storeid;
 
-        if (isset(self::$stores['data'][$name]) === true) {
-            return self::$stores['data'][$name];
+        if (isset(self::$stores['data'][$storeCode]) === true) {
+            return self::$stores['data'][$storeCode];
         }
 
-        if (\PerspectiveAPI\Connector::getDataStoreExists($name) === true) {
-            self::$stores['data'][$name] = new \PerspectiveAPI\Storage\Types\DataStore($name);
-            return self::$stores['data'][$name];
+        if (\PerspectiveAPI\Connector::getDataStoreExists($storeCode) === true) {
+            self::$stores['data'][$storeCode] = new \PerspectiveAPI\Storage\Types\DataStore($namespace, $storeid);
+            return self::$stores['data'][$storeCode];
         }
 
         return null;
@@ -67,22 +68,23 @@ class StorageFactory
     /**
      * Gets the user store object.
      *
-     * @param string $name The user store name.
+     * @param string $storeid The user storeid.
      *
      * @return null|object
      */
-    public static function getUserStore(string $name)
+    public static function getUserStore(string $storeid)
     {
-        $projectCode = str_replace('\Framework\StorageFactory', '', static::class);
-        $name        = str_replace('\\', '/', $projectCode).'/'.$name;
+        $namespace = str_replace('\Framework\StorageFactory', '', static::class);
+        $namespace = str_replace('\\', '/', $namespace);
+        $storeCode = $namespace.'/'.$storeid;
 
-        if (isset(self::$stores['user'][$name]) === true) {
-            return self::$stores['user'][$name];
+        if (isset(self::$stores['user'][$storeCode]) === true) {
+            return self::$stores['user'][$storeCode];
         }
 
-        if (\PerspectiveAPI\Connector::getUserStoreExists($name) === true) {
-            self::$stores['user'][$name] = new \PerspectiveAPI\Storage\Types\UserStore($name);
-            return self::$stores['user'][$name];
+        if (\PerspectiveAPI\Connector::getUserStoreExists($storeCode) === true) {
+            self::$stores['user'][$storeCode] = new \PerspectiveAPI\Storage\Types\UserStore($namespace, $storeid);
+            return self::$stores['user'][$storeCode];
         }
 
         return null;
