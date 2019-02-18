@@ -90,4 +90,19 @@ abstract class Store
     }//end getNamespace()
 
 
+    /**
+     * Sets the store namespace.
+     *
+     * Can set as the dependant project namespace so e.g setting property values in this store will look at the
+     * dependant project properties.
+     *
+     * @return string
+     */
+    public function setNamespace(string $namespace)
+    {
+        $this->namespace = $namespace;
+
+    }//end getNamespace()
+
+
 }//end class

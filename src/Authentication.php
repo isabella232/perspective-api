@@ -30,6 +30,20 @@ class Authentication
      */
     private static $loggedIn = null;
 
+    /**
+     * Current namespace
+     *
+     * @var string
+     */
+    private static function getNamespace()
+    {
+        // Can't be statically cached as Authentication class can be called from different projects in a single process.
+        $namespace = str_replace('\Framework\Authentication', '', static::class);
+        $namespace = strtolower(str_replace('\\', '/', $namespace));
+        return $namespace;
+
+    }//end getNamespace()
+
 
     /**
      * Gets the current user object.
@@ -38,13 +52,35 @@ class Authentication
      */
     final public static function getCurrentUser()
     {
-        if (self::isLoggedIn() === true) {
-            return self::$user;
+        $user = null;
+        if (self::$user !== null) {
+            $user = self::$user;
+        } else if (self::isLoggedIn() === true) {
+            $user = self::$user;
         }
 
-        return null;
+        if ($user !== null) {
+            // The user could be from another project store, set the namespace to enable properties/references.
+            $user->getStorage()->setNamespace(self::getNamespace());
+        }
+
+        return $user;
 
     }//end getCurrentUser()
+
+
+    /**
+     * Sets the current user object.
+     *
+     * @param object $user The user we want to set.
+     *
+     * @return void
+     */
+    final public static function setCurrentUser(\PerspectiveAPI\Objects\Types\User $user)
+    {
+        self::$user = $user;
+
+    }//end setCurrentUser()
 
 
     /**
@@ -54,8 +90,15 @@ class Authentication
      */
     final public static function getCurrentUserid()
     {
-        if (self::isLoggedIn() === true) {
-            return self::$user->getID();
+        $user = null;
+        if (self::$user !== null) {
+            $user = self::$user;
+        } else if (self::isLoggedIn() === true) {
+            $user = self::$user;
+        }
+
+        if ($user !== null) {
+            return $user->getID();
         }
 
         return null;
