@@ -35,14 +35,14 @@ class Authentication
      *
      * @var string
      */
-    private static function getNamespace()
+    private static function getPackage()
     {
         // Can't be statically cached as Authentication class can be called from different projects in a single process.
         $namespace = str_replace('\Framework\Authentication', '', static::class);
-        $namespace = strtolower(str_replace('\\', '/', $namespace));
-        return $namespace;
+        $package   = strtolower(str_replace('\\', '/', $namespace));
+        return $package;
 
-    }//end getNamespace()
+    }//end getPackage()
 
 
     /**
@@ -61,7 +61,7 @@ class Authentication
 
         if ($user !== null) {
             // The user could be from another project store, set the namespace to enable properties/references.
-            $user->getStorage()->setNamespace(self::getNamespace());
+            $user->getStorage()->setPackage(self::getPackage());
         }
 
         return $user;
@@ -154,8 +154,14 @@ class Authentication
             if ($user === null) {
                 self::$loggedIn = false;
             } else {
-                self::$user     = new \PerspectiveAPI\Objects\Types\User(
-                    \PerspectiveAPI\Storage\StorageFactory::getUserStore($user['storeCode']),
+                // TODO: @mhaidar need connector to return me the namespace.
+                $package    = dirname($user['storeCode']);
+                $namespace  = str_replace('/', '\\', $package);
+                $className  = '\\'.$namespace.'\\Framework\StorageFactory';
+                $userStore  = $className::getUserStore(basename($user['storeCode']));
+                $typeClass  = ($user['typeClass'] ?? '\PerspectiveAPI\Objects\Types\User');
+                self::$user = new $typeClass(
+                    $userStore,
                     $user['id'],
                     $user['username'],
                     $user['firstName'],

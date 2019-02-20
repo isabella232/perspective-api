@@ -75,7 +75,7 @@ abstract class Property
             $this->object->getObjectType(),
             $store->getCode(),
             $this->object->getID(),
-            $store->getNamespace().'/'.$this->id
+            $store->getPackage().'/'.$this->id
         );
 
     }//end getValue()
@@ -97,7 +97,7 @@ abstract class Property
             $this->object->getObjectType(),
             $store->getCode(),
             $this->object->getID(),
-            $store->getNamespace().'/'.$this->id,
+            $store->getPackage().'/'.$this->id,
             $value
         );
 
@@ -119,7 +119,7 @@ abstract class Property
             $this->object->getObjectType(),
             $store->getCode(),
             $this->object->getID(),
-            $store->getNamespace().'/'.$this->id
+            $store->getPackage().'/'.$this->id
         );
 
     }//end deleteValue()

@@ -28,8 +28,58 @@ trait ReferenceTrait
      */
     final public function getReference(string $referenceCode)
     {
-        $referenceCode = $this->store->getNamespace().'/'.$referenceCode;
-        return \PerspectiveAPI\Connector::getReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode);
+        $referenceCode = $this->store->getPackage().'/'.$referenceCode;
+        $results       = \PerspectiveAPI\Connector::getReference(
+            $this->getObjectType(),
+            $this->getID(),
+            $this->store->getCode(),
+            $referenceCode
+        );
+
+        if ($results === null) {
+            return null;
+        }
+
+        $references = [];
+        $multiple   = isset($results[0]);
+        if ($multiple === false) {
+            $results = [$results];
+        }
+
+        foreach ($results as $result) {
+            // TODO: @mhaidar need connector to return me the namespace.
+            $package   = dirname($result['storeCode']);
+            $namespace = str_replace('/', '\\', $package);
+            $className = '\\'.$namespace.'\\Framework\StorageFactory';
+            if ($result['objectType'] === 'user') {
+                $userStore    = $className::getUserStore(basename($result['storeCode']));
+                $typeClass    = ($result['typeClass'] ?? '\PerspectiveAPI\Objects\Types\User');
+                $references[] = new $typeClass(
+                    $userStore,
+                    $result['id'],
+                    $result['username'],
+                    $result['firstName'],
+                    $result['lastName']
+                );
+
+                $userStore->setPackage($this->store->getPackage());
+            } else {
+                $dataStore    = $className::getDataStore(basename($result['storeCode']));
+                $typeClass    = ($result['typeClass'] ?? '\PerspectiveAPI\Objects\Types\DataRecord');
+                $references[] = new $typeClass(
+                    $dataStore,
+                    $result['id']
+                );
+
+                $dataStore->setPackage($this->store->getPackage());
+            }
+        }
+
+        if ($multiple === false) {
+            $references = $references[0];
+        }
+
+        return $references;
 
     }//end getReference()
 
@@ -44,7 +94,7 @@ trait ReferenceTrait
      */
     final public function addReference(string $referenceCode, $objects)
     {
-        $referenceCode = $this->store->getNamespace().'/'.$referenceCode;
+        $referenceCode = $this->store->getPackage().'/'.$referenceCode;
         return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end addReference()
@@ -60,7 +110,7 @@ trait ReferenceTrait
      */
     final public function setReference(string $referenceCode, $objects)
     {
-        $referenceCode = $this->store->getNamespace().'/'.$referenceCode;
+        $referenceCode = $this->store->getPackage().'/'.$referenceCode;
         return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end setReference()
@@ -76,7 +126,7 @@ trait ReferenceTrait
      */
     final public function deleteReference(string $referenceCode, $objects)
     {
-        $referenceCode = $this->store->getNamespace().'/'.$referenceCode;
+        $referenceCode = $this->store->getPackage().'/'.$referenceCode;
         return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end deleteReference()

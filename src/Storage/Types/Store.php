@@ -25,11 +25,11 @@ abstract class Store
     protected $id = null;
 
     /**
-     * The store namespace.
+     * The store package.
      *
      * @var string|null
      */
-    protected $namespace = null;
+    protected $package = null;
 
      /**
      * The store code.
@@ -45,11 +45,11 @@ abstract class Store
      *
      * @return void
      */
-    public function __construct(string $namespace, string $storeid)
+    public function __construct(string $package, string $storeid)
     {
-        $this->id        = $storeid;
-        $this->namespace = $namespace;
-        $this->code      = $this->namespace.'/'.$this->id;
+        $this->package = $package;
+        $this->id      = $storeid;
+        $this->code    = $package.'/'.$storeid;
 
     }//end __construct()
 
@@ -79,30 +79,30 @@ abstract class Store
 
 
     /**
-     * Gets the store namespace.
+     * Gets the store package.
      *
      * @return string
      */
-    public function getNamespace()
+    public function getPackage()
     {
-        return $this->namespace;
+        return $this->package;
 
-    }//end getNamespace()
+    }//end getPackage()
 
 
     /**
-     * Sets the store namespace.
+     * Sets the store package.
      *
-     * Can set as the dependant project namespace so e.g setting property values in this store will look at the
+     * Can set as the dependant project package so e.g setting property values in this store will look at the
      * dependant project properties.
      *
      * @return string
      */
-    public function setNamespace(string $namespace)
+    public function setPackage(string $package)
     {
-        $this->namespace = $namespace;
+        $this->package = $package;
 
-    }//end getNamespace()
+    }//end setPackage()
 
 
 }//end class

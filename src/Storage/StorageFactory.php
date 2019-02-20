@@ -48,15 +48,15 @@ class StorageFactory
     public static function getDataStore(string $storeid)
     {
         $namespace = str_replace('\Framework\StorageFactory', '', static::class);
-        $namespace = strtolower(str_replace('\\', '/', $namespace));
-        $storeCode = $namespace.'/'.$storeid;
+        $package   = strtolower(str_replace('\\', '/', $namespace));
+        $storeCode = $package.'/'.$storeid;
 
         if (isset(self::$stores['data'][$storeCode]) === true) {
             return self::$stores['data'][$storeCode];
         }
 
         if (\PerspectiveAPI\Connector::getDataStoreExists($storeCode) === true) {
-            self::$stores['data'][$storeCode] = new \PerspectiveAPI\Storage\Types\DataStore($namespace, $storeid);
+            self::$stores['data'][$storeCode] = new \PerspectiveAPI\Storage\Types\DataStore($package, $storeid);
             return self::$stores['data'][$storeCode];
         }
 
@@ -75,15 +75,15 @@ class StorageFactory
     public static function getUserStore(string $storeid)
     {
         $namespace = str_replace('\Framework\StorageFactory', '', static::class);
-        $namespace = strtolower(str_replace('\\', '/', $namespace));
-        $storeCode = $namespace.'/'.$storeid;
+        $package   = strtolower(str_replace('\\', '/', $namespace));
+        $storeCode = $package.'/'.$storeid;
 
         if (isset(self::$stores['user'][$storeCode]) === true) {
             return self::$stores['user'][$storeCode];
         }
 
         if (\PerspectiveAPI\Connector::getUserStoreExists($storeCode) === true) {
-            self::$stores['user'][$storeCode] = new \PerspectiveAPI\Storage\Types\UserStore($namespace, $storeid);
+            self::$stores['user'][$storeCode] = new \PerspectiveAPI\Storage\Types\UserStore($package, $storeid);
             return self::$stores['user'][$storeCode];
         }
 
