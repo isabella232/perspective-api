@@ -30,17 +30,17 @@ class DataStore extends Store
     public function createDataRecord(string $type=null, string $parent=null)
     {
         if ($type !== null) {
-            $type = $this->package.'/'.$type;
-
-
+            $type      = $this->package.'/'.$type;
             $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName('data', $type);
             if ($typeClass === null) {
                 throw new \Exception('Unknown custom data record type to create');
             }
-        }
 
-        if (class_exists($typeClass) === false) {
-            throw new \Exception('Type class can not be found');
+            if (class_exists($typeClass) === false) {
+                throw new \Exception('Type class can not be found');
+            }
+        } else {
+            $typeClass = '\PerspectiveAPI\Objects\Types\DataRecord';
         }
 
         $id = \PerspectiveAPI\Connector::createDataRecord($this->code, $type, $parent);
