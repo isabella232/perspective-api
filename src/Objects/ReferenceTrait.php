@@ -47,12 +47,11 @@ trait ReferenceTrait
         }
 
         foreach ($results as $result) {
-            // TODO: @mhaidar need connector to return me the namespace.
-            $package   = dirname($result['storeCode']);
-            $namespace = str_replace('/', '\\', $package);
-            $className = '\\'.$namespace.'\\Framework\StorageFactory';
             if ($result['objectType'] === 'user') {
-                $userStore    = $className::getUserStore(basename($result['storeCode']));
+                $userStore    = new \PerspectiveAPI\Storage\Types\UserStore(
+                    dirname($result['storeCode']),
+                    basename($result['storeCode'])
+                );
                 $typeClass    = ($result['typeClass'] ?? '\PerspectiveAPI\Objects\Types\User');
                 $references[] = new $typeClass(
                     $userStore,
@@ -64,7 +63,10 @@ trait ReferenceTrait
 
                 $userStore->setPackage($this->store->getPackage());
             } else {
-                $dataStore    = $className::getDataStore(basename($result['storeCode']));
+                $dataStore    = new \PerspectiveAPI\Storage\Types\DataStore(
+                    dirname($result['storeCode']),
+                    basename($result['storeCode'])
+                );
                 $typeClass    = ($result['typeClass'] ?? '\PerspectiveAPI\Objects\Types\DataRecord');
                 $references[] = new $typeClass(
                     $dataStore,

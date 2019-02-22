@@ -154,11 +154,10 @@ class Authentication
             if ($user === null) {
                 self::$loggedIn = false;
             } else {
-                // TODO: @mhaidar need connector to return me the namespace.
-                $package    = dirname($user['storeCode']);
-                $namespace  = str_replace('/', '\\', $package);
-                $className  = '\\'.$namespace.'\\Framework\StorageFactory';
-                $userStore  = $className::getUserStore(basename($user['storeCode']));
+                $userStore  = new \PerspectiveAPI\Storage\Types\UserStore(
+                    dirname($user['storeCode']),
+                    basename($user['storeCode'])
+                );
                 $typeClass  = ($user['typeClass'] ?? '\PerspectiveAPI\Objects\Types\User');
                 self::$user = new $typeClass(
                     $userStore,
