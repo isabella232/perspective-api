@@ -24,13 +24,6 @@ abstract class Store
      */
     protected $id = null;
 
-    /**
-     * The store package.
-     *
-     * @var string|null
-     */
-    protected $package = null;
-
      /**
      * The store code.
      *
@@ -39,17 +32,28 @@ abstract class Store
     protected $code = null;
 
     /**
+     * The store package.
+     *
+     * @var string|null
+     */
+    protected $projectContext = null;
+
+    /**
      * Constructor for Store Class.
      *
-     * @param string $storeid The storeid.
+     * @param string $storeCode The store code.
      *
      * @return void
      */
-    public function __construct(string $package, string $storeid)
+    public function __construct(string $storeCode, string $projectContext=null)
     {
-        $this->package = $package;
-        $this->id      = $storeid;
-        $this->code    = $package.'/'.$storeid;
+        $this->id   = basename($storeCode);
+        $this->code = $storeCode;
+        if ($projectContext === null) {
+            $projectContext = dirname($storeCode);
+        }
+
+        $this->projectContext = $projectContext;
 
     }//end __construct()
 
@@ -67,9 +71,10 @@ abstract class Store
 
 
     /**
-     * Gets the store code.
+     * Gets the store code
      *
      * @return string
+     * @internal
      */
     public function getCode()
     {
@@ -79,30 +84,32 @@ abstract class Store
 
 
     /**
-     * Gets the store package.
+     * Gets the store project context.
      *
      * @return string
+     * @internal
      */
-    public function getPackage()
+    public function getProjectContext()
     {
-        return $this->package;
+        return $this->projectContext;
 
-    }//end getPackage()
+    }//end getProjectContext()
 
 
     /**
-     * Sets the store package.
+     * Sets the store project context.
      *
-     * Can set as the dependant project package so e.g setting property values in this store will look at the
+     * Can set as the dependant project so e.g setting property values in this store will look at the
      * dependant project properties.
      *
-     * @return string
+     * @return void
+     * @internal
      */
-    public function setPackage(string $package)
+    public function setProjectContext(string $projectContext)
     {
-        $this->package = $package;
+        $this->projectContext = $projectContext;
 
-    }//end setPackage()
+    }//end setProjectContext()
 
 
 }//end class

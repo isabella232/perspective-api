@@ -35,14 +35,14 @@ class Authentication
      *
      * @var string
      */
-    private static function getPackage()
+    private static function getProjectContext()
     {
         // Can't be statically cached as Authentication class can be called from different projects in a single process.
-        $namespace = str_replace('\Framework\Authentication', '', static::class);
-        $package   = strtolower(str_replace('\\', '/', $namespace));
-        return $package;
+        $namespace      = str_replace('\Framework\Authentication', '', static::class);
+        $projectContext = strtolower(str_replace('\\', '/', $namespace));
+        return $projectContext;
 
-    }//end getPackage()
+    }//end getProjectContext()
 
 
     /**
@@ -61,7 +61,26 @@ class Authentication
 
         if ($user !== null) {
             // The user could be from another project store, set the namespace to enable properties/references.
-            $user->getStorage()->setPackage(self::getPackage());
+            $context = self::getProjectContext();
+            if ($user->getStorage()->getProjectContext() !== $context) {
+                $user->getStorage()->setProjectContext($context);
+                // TODO: @mhaidar alternative way to avoid needing a setProjectContext function. Not sure how user
+                // remapping functionality will fit in later.
+                /*$userStore  = new \PerspectiveAPI\Storage\Types\UserStore(
+                    $user->getStorage()->getCode(),
+                    $context
+                );
+                $typeClass  = '\\'.get_class($user);
+                self::$user = new $typeClass(
+                    $userStore,
+                    $user->getId(),
+                    $user->getUsername(),
+                    $user->getFirstName(),
+                    $user->getLastName()
+                );
+
+                return self::$user;*/
+            }
         }
 
         return $user;
@@ -154,10 +173,7 @@ class Authentication
             if ($user === null) {
                 self::$loggedIn = false;
             } else {
-                $userStore  = new \PerspectiveAPI\Storage\Types\UserStore(
-                    dirname($user['storeCode']),
-                    basename($user['storeCode'])
-                );
+                $userStore  = new \PerspectiveAPI\Storage\Types\UserStore($user['storeCode']);
                 $typeClass  = ($user['typeClass'] ?? '\PerspectiveAPI\Objects\Types\User');
                 self::$user = new $typeClass(
                     $userStore,
