@@ -156,6 +156,10 @@ class User extends AbstractObject
      */
     final public function addToGroup(string $groupid)
     {
+        if ($this->store->ownProjectContext() === false) {
+            throw new \Exception('Operation out of own project context');
+        }
+
         \PerspectiveAPI\Connector::addUserToGroup($this->getID(), $this->store->getCode(), $groupid);
 
     }//end addToGroup()
@@ -170,6 +174,10 @@ class User extends AbstractObject
      */
     final public function removeFromGroup(string $groupid)
     {
+        if ($this->store->ownProjectContext() === false) {
+            throw new \Exception('Operation out of own project context');
+        }
+
         \PerspectiveAPI\Connector::removeUserFromGroup($this->getID(), $this->store->getCode(), $groupid);
 
     }//end removeFromGroup()

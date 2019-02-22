@@ -32,7 +32,9 @@ abstract class Store
     protected $code = null;
 
     /**
-     * The store package.
+     * The store project context.
+     *
+     * To enable use of property/reference values on object from a parent project used inside a depedant project.
      *
      * @var string|null
      */
@@ -99,9 +101,6 @@ abstract class Store
     /**
      * Sets the store project context.
      *
-     * Can set as the dependant project so e.g setting property values in this store will look at the
-     * dependant project properties.
-     *
      * @return void
      * @internal
      */
@@ -110,6 +109,25 @@ abstract class Store
         $this->projectContext = $projectContext;
 
     }//end setProjectContext()
+
+
+    /**
+     * Return whether store owns the project context.
+     *
+     * Only property/reference value operations allowed out of own project context.
+     *
+     * @return boolean
+     * @internal
+     */
+    public function ownProjectContext()
+    {
+        if (dirname($this->code) === $this->projectContext) {
+            return true;
+        }
+
+        return false;
+
+    }//end ownProjectContext()
 
 
 }//end class

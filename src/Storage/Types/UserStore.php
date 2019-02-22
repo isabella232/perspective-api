@@ -39,6 +39,10 @@ class UserStore extends Store
         string $type=null,
         array $groups=[]
     ) {
+        if ($this->ownProjectContext() === false) {
+            throw new \Exception('Operation out of own project context');
+        }
+
         $id = \PerspectiveAPI\Connector::createUser($this->code, $username, $firstName, $lastName, $type, $groups);
         if ($id !== null) {
             return new \PerspectiveAPI\Objects\Types\User($this, $id, $username, $firstName, $lastName);
@@ -116,6 +120,10 @@ class UserStore extends Store
         string $type=null,
         array $groups=[]
     ) {
+        if ($this->ownProjectContext() === false) {
+            throw new \Exception('Operation out of own project context');
+        }
+
         $id = \PerspectiveAPI\Connector::createGroup($this->code, $groupName, $type, $groups);
         if ($id !== null) {
             return new \PerspectiveAPI\Objects\Types\Group($this, $id, $groupName);

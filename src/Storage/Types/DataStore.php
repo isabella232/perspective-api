@@ -29,6 +29,10 @@ class DataStore extends Store
      */
     public function createDataRecord(string $type=null, string $parent=null)
     {
+        if ($this->ownProjectContext() === false) {
+            throw new \Exception('Operation out of own project context');
+        }
+
         if ($type !== null) {
             $type      = $this->projectContext.'/'.$type;
             $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName('data', $type);
