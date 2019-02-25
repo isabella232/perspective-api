@@ -123,12 +123,10 @@ abstract class AbstractObject
      */
     final public function property(string $propertyCode)
     {
-        $propertyTypeClass = \PerspectiveAPI\Connector::getPropertyTypeClass(
-            $this->getObjectType(),
-            $this->store->getProjectContext().'/'.$propertyCode
-        );
-        if ($propertyTypeClass === null) {
-            throw new \Exception('Unknown property code');
+        $propertyType      = substr(strrchr($propertyCode, '.'), 1);
+        $propertyTypeClass = '\PerspectiveAPI\Property\Types\\'.ucfirst($propertyType);
+        if (class_exists($propertyTypeClass) === false) {
+            throw new \Exception(sprintf('Unknown property type %s', $propertyType));
         }
 
         return new $propertyTypeClass($this, $propertyCode);

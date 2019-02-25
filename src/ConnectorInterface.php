@@ -16,19 +16,6 @@ namespace PerspectiveAPI;
 interface ConnectorInterface
 {
 
-
-    /**
-     * Gets the property's type.
-     *
-     * @param string $objectType   The object type.
-     * @param string $propertyCode The property code.
-     *
-     * @return string
-     * @throws InvalidDataException Thrown when object type or property code is invalid.
-     */
-    public static function getPropertyTypeClass(string $objectType, string $propertyCode);
-
-
     /**
      * Get reference.
      *
