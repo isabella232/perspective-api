@@ -93,6 +93,7 @@ trait ReferenceTrait
     final public function addReference(string $referenceCode, $objects)
     {
         $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $objects       = self::getReferencedObjectsArray($objects);
         return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end addReference()
@@ -109,6 +110,7 @@ trait ReferenceTrait
     final public function setReference(string $referenceCode, $objects)
     {
         $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $objects       = self::getReferencedObjectsArray($objects);
         return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end setReference()
@@ -125,9 +127,49 @@ trait ReferenceTrait
     final public function deleteReference(string $referenceCode, $objects)
     {
         $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $objects       = self::getReferencedObjectsArray($objects);
         return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
 
     }//end deleteReference()
+
+
+    /**
+     * Helper function to convert $objects argument to a flat object data array for reference related functions.
+     *
+     * @param mixed  $objects       One or more objects to add to the reference, retrieved from the store that the
+     *                              reference points to.
+     *
+     * @return array
+     * @throws ReadOnlyException Thrown when error occurs.
+     */
+    private static function getReferencedObjectsArray($objects)
+    {
+        if (is_array($objects) === false) {
+            $objects = [$objects];
+        }
+
+        $referencedObjects = [];
+        foreach ($objects as $object) {
+            if ($object instanceof \PerspectiveAPI\Objects\Types\User) {
+                $referencedObjectType = 'user';
+            } else if ($object instanceof \PerspectiveAPI\Objects\Types\Group) {
+                $referencedObjectType = 'userGroup';
+            } else if ($object instanceof \PerspectiveAPI\Objects\Types\DataRecord) {
+                $referencedObjectType = 'data';
+            } else {
+                throw new ReadOnlyException('Invalid referenced object');
+            }
+
+            $referencedObjects[] = [
+                'id'         => $object->getID(),
+                'storeCode'  => $object->getStorage()->getCode(),
+                'objectType' => $referencedObjectType,
+            ];
+        }//end foreach
+
+        return $referencedObjects;
+
+    }//end getReferencedObjectsArray()
 
 
 }//end interface
