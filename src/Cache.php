@@ -36,4 +36,22 @@ class Cache
     }//end noCache()
 
 
+    /**
+     * Returns a cache report for the request which will be given to content cache.
+     *
+     * @return array
+     */
+    public static function getCacheReport()
+    {
+        if (self::$noCache === true) {
+            $cacheable = false;
+        } else {
+            $cacheable = true;
+        }
+
+        return ['cacheable' => $cacheable];
+
+    }//end getCacheReport()
+
+
 }//end class
