@@ -524,4 +524,14 @@ interface ConnectorInterface
     public static function getProjectContext(string $namespace);
 
 
+    /**
+     * Checks if the project existss.
+     *
+     * @param string $projectCode The code of the project.
+     *
+     * @return boolean
+     */
+    public static function projectExists(string $projectCode);
+
+
 }//end interface

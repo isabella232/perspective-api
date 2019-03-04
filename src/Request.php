@@ -25,7 +25,7 @@ class Request
     {
         // Can't be statically cached as Request class can be called from different projects in a single process.
         $namespace      = str_replace('\Framework\Request', '', static::class);
-        $projectContext = strtolower(\PerspectiveAPI\Connector::getProjectContext($namespace));
+        $projectContext = \PerspectiveAPI\Connector::getProjectContext($namespace);
         return $projectContext;
 
     }//end getProjectContext()
