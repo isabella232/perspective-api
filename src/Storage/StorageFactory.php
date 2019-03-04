@@ -48,7 +48,7 @@ class StorageFactory
     public static function getDataStore(string $storeid)
     {
         $namespace      = str_replace('\Framework\StorageFactory', '', static::class);
-        $projectContext = strtolower(str_replace('\\', '/', $namespace));
+        $projectContext = strtolower(\PerspectiveAPI\Connector::getProjectContext($namespace));
         $storeCode      = $projectContext.'/'.$storeid;
 
         if (isset(self::$stores['data'][$storeCode]) === true) {
@@ -75,7 +75,7 @@ class StorageFactory
     public static function getUserStore(string $storeid)
     {
         $namespace      = str_replace('\Framework\StorageFactory', '', static::class);
-        $projectContext = strtolower(str_replace('\\', '/', $namespace));
+        $projectContext = strtolower(\PerspectiveAPI\Connector::getProjectContext($namespace));
         $storeCode      = $projectContext.'/'.$storeid;
 
         if (isset(self::$stores['user'][$storeCode]) === true) {

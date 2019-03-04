@@ -514,4 +514,14 @@ interface ConnectorInterface
     public static function isReadOnly();
 
 
+    /**
+     * Returns the project context of the project.
+     *
+     * @param string $namespace The namespace of the class trying to get the project context of.
+     *
+     * @return string
+     */
+    public static function getProjectContext(string $namespace);
+
+
 }//end interface

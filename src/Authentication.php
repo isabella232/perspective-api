@@ -39,7 +39,7 @@ class Authentication
     {
         // Can't be statically cached as Authentication class can be called from different projects in a single process.
         $namespace      = str_replace('\Framework\Authentication', '', static::class);
-        $projectContext = strtolower(str_replace('\\', '/', $namespace));
+        $projectContext = strtolower(\PerspectiveAPI\Connector::getProjectContext($namespace));
         return $projectContext;
 
     }//end getProjectContext()
