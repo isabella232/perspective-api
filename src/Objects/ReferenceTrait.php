@@ -28,11 +28,11 @@ trait ReferenceTrait
      */
     final public function getReference(string $referenceCode)
     {
-        $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $results       = \PerspectiveAPI\Connector::getReference(
             $this->getObjectType(),
             $this->getID(),
-            $this->store->getCode(),
+            $this->getStorageCode(),
             $referenceCode
         );
 
@@ -50,7 +50,7 @@ trait ReferenceTrait
             if ($result['objectType'] === 'user') {
                 $userStore    = new \PerspectiveAPI\Storage\Types\UserStore(
                     $result['storeCode'],
-                    $this->store->getProjectContext()
+                    $this->getProjectContext()
                 );
                 $typeClass    = ($result['typeClass'] ?? '\PerspectiveAPI\Objects\Types\User');
                 $references[] = new $typeClass(
@@ -63,7 +63,7 @@ trait ReferenceTrait
             } else {
                 $dataStore    = new \PerspectiveAPI\Storage\Types\DataStore(
                     $result['storeCode'],
-                    $this->store->getProjectContext()
+                    $this->getProjectContext()
                 );
                 $typeClass    = ($result['typeClass'] ?? '\PerspectiveAPI\Objects\Types\DataRecord');
                 $references[] = new $typeClass(
@@ -92,9 +92,9 @@ trait ReferenceTrait
      */
     final public function addReference(string $referenceCode, $objects)
     {
-        $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $objects       = self::getReferencedObjectsArray($objects);
-        return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $this->getStorageCode(), $referenceCode, $objects);
 
     }//end addReference()
 
@@ -109,9 +109,9 @@ trait ReferenceTrait
      */
     final public function setReference(string $referenceCode, $objects)
     {
-        $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $objects       = self::getReferencedObjectsArray($objects);
-        return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $this->getStorageCode(), $referenceCode, $objects);
 
     }//end setReference()
 
@@ -126,9 +126,9 @@ trait ReferenceTrait
      */
     final public function deleteReference(string $referenceCode, $objects)
     {
-        $referenceCode = $this->store->getProjectContext().'/'.$referenceCode;
+        $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $objects       = self::getReferencedObjectsArray($objects);
-        return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $this->store->getCode(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $this->getStorageCode(), $referenceCode, $objects);
 
     }//end deleteReference()
 
@@ -162,7 +162,7 @@ trait ReferenceTrait
 
             $referencedObjects[] = [
                 'id'         => $object->getID(),
-                'storeCode'  => $object->getStorage()->getCode(),
+                'storeCode'  => $object->getStorageCode(),
                 'objectType' => $referencedObjectType,
             ];
         }//end foreach

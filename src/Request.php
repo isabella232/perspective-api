@@ -17,6 +17,21 @@ class Request
 {
 
     /**
+     * Current namespace
+     *
+     * @var string
+     */
+    private static function getProjectContext()
+    {
+        // Can't be statically cached as Authentication class can be called from different projects in a single process.
+        $namespace      = str_replace('\Framework\Request', '', static::class);
+        $projectContext = strtolower(str_replace('\\', '/', $namespace));
+        return $projectContext;
+
+    }//end getProjectContext()
+
+
+    /**
      * Returns the current deployment object.
      *
      * @return object
@@ -24,7 +39,8 @@ class Request
     public static function getProjectInstance()
     {
         return new \PerspectiveAPI\Objects\Types\ProjectInstance(
-            \PerspectiveAPI\Connector::getProjectInstanceID()
+            \PerspectiveAPI\Connector::getProjectInstanceID(),
+            self::getProjectContext()
         );
 
     }//end getProjectInstance()

@@ -57,6 +57,38 @@ abstract class AbstractObject
 
 
     /**
+     * Gets the storeage code that the record is contained within.
+     *
+     * @return object
+     */
+    final public function getStorageCode()
+    {
+        if ($this instanceof \PerspectiveAPI\Objects\Types\ProjectInstance) {
+            return '';
+        } else {
+            return $this->store->getCode();
+        }
+
+    }//end getStorageCode()
+
+
+    /**
+     * Gets the project context.
+     *
+     * @return string
+     */
+    final public function getProjectContext()
+    {
+        if ($this instanceof \PerspectiveAPI\Objects\Types\ProjectInstance) {
+            return $this->projectContext;
+        } else {
+            return $this->store->getProjectContext();
+        }
+
+    }//end getProjectContext()
+
+
+    /**
      * Gets the value of a given property.
      *
      * @param string $propertyCode The code of the property that is being retrieved.
@@ -148,7 +180,7 @@ abstract class AbstractObject
         ) {
             $objectType = 'user';
         } else if ($this instanceof \PerspectiveAPI\Objects\Types\ProjectInstance) {
-            $objectType = 'project';
+            $objectType = 'projectinstance';
         }
 
         return $objectType;

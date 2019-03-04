@@ -20,6 +20,12 @@ use \PerspectiveAPI\Objects\AbstractObject as AbstractObject;
 class ProjectInstance extends AbstractObject
 {
 
+    /**
+     * The project context.
+     *
+     * @var string
+     */
+    protected $projectContext = null;
 
     /**
      * Construct function for Project Instance.
@@ -28,9 +34,10 @@ class ProjectInstance extends AbstractObject
      *
      * @return void
      */
-    public function __construct(string $id)
+    public function __construct(string $id, string $projectContext)
     {
-        $this->id = $id;
+        $this->id             = $id;
+        $this->projectContext = $projectContext;
 
     }//end __construct()
 

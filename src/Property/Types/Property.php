@@ -49,6 +49,7 @@ abstract class Property
     public function __construct($owner, string $propertyCode)
     {
         if ($owner instanceof \PerspectiveAPI\Objects\Types\User
+            || $owner instanceof \PerspectiveAPI\Objects\Types\Group
             || $owner instanceof \PerspectiveAPI\Objects\Types\DataRecord
             || $owner instanceof \PerspectiveAPI\Objects\Types\ProjectInstance
         ) {
@@ -73,9 +74,9 @@ abstract class Property
 
         return \PerspectiveAPI\Connector::getPropertyValue(
             $this->object->getObjectType(),
-            $store->getCode(),
+            $this->object->getStorageCode(),
             $this->object->getID(),
-            $store->getProjectContext().'/'.$this->id
+            $this->object->getProjectContext().'/'.$this->id
         );
 
     }//end getValue()
@@ -95,9 +96,9 @@ abstract class Property
         $store = $this->object->getStorage();
         \PerspectiveAPI\Connector::setPropertyValue(
             $this->object->getObjectType(),
-            $store->getCode(),
+            $this->object->getStorageCode(),
             $this->object->getID(),
-            $store->getProjectContext().'/'.$this->id,
+            $this->object->getProjectContext().'/'.$this->id,
             $value
         );
 
@@ -117,9 +118,9 @@ abstract class Property
 
         \PerspectiveAPI\Connector::deletePropertyValue(
             $this->object->getObjectType(),
-            $store->getCode(),
+            $this->object->getStorageCode(),
             $this->object->getID(),
-            $store->getProjectContext().'/'.$this->id
+            $this->object->getProjectContext().'/'.$this->id
         );
 
     }//end deleteValue()
