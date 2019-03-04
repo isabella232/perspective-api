@@ -16,6 +16,20 @@ namespace PerspectiveAPI;
 class Queue
 {
 
+    /**
+     * Current namespace
+     *
+     * @var string
+     */
+    private static function getProjectContext()
+    {
+        // Can't be statically cached as Queue class can be called from different projects in a single process.
+        $namespace      = str_replace('\Framework\Queue', '', static::class);
+        $projectContext = strtolower(\PerspectiveAPI\Connector::getProjectContext($namespace));
+        return $projectContext;
+
+    }//end getProjectContext()
+
 
     /**
      * Queue job.
@@ -33,6 +47,13 @@ class Queue
         callable $successCallback=null,
         callable $failedCallback=null
     ) {
+        $projectContext = self::getProjectContext();
+        foreach ($queueNames as &$queueName) {
+            $queueName = $projectContext.'/'.$queueName;
+        }
+
+        unset($queueName);
+
         return \PerspectiveAPI\Connector::addQueueJob($queueNames, $data, $successCallback, $failedCallback);
 
     }//end addJob()
