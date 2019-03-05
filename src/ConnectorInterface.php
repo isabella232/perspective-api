@@ -534,4 +534,12 @@ interface ConnectorInterface
     public static function projectExists(string $projectCode);
 
 
+    /**
+     * Returns list of files that have been autoloaded.
+     *
+     * @return array
+     */
+    public static function getAutoloadedFilepaths();
+
+
 }//end interface

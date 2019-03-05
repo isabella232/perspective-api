@@ -49,7 +49,12 @@ class Cache
             $cacheable = true;
         }
 
-        return ['cacheable' => $cacheable];
+        $loadedFilepaths = \PerspectiveAPI\Connector::getAutoloadedFilepaths();
+
+        return [
+            'cacheable'       => $cacheable,
+            'loadedFilepaths' => $loadedFilepaths,
+        ];
 
     }//end getCacheReport()
 
