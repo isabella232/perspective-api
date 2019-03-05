@@ -29,6 +29,20 @@ class User extends AbstractObject
      */
     private $username = null;
 
+    /**
+     * The firstname of the user
+     *
+     * @var string|null
+     */
+    private $firstName = null;
+
+    /**
+     * The lastname of the user
+     *
+     * @var string|null
+     */
+    private $lastName = null;
+
 
     /**
      * Construct function for User.
@@ -114,7 +128,7 @@ class User extends AbstractObject
         \PerspectiveAPI\Connector::setUsername($this->getID(), $this->store->getCode(), $username);
         $this->username = $username;
 
-    }//end setFirstName()
+    }//end setUsername()
 
 
     /**
