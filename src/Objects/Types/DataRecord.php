@@ -32,6 +32,15 @@ class DataRecord extends AspectedObject
      */
     public function __construct(DataStore $store, string $id)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid Data record id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $this->store = $store;
         $this->id    = $id;
 

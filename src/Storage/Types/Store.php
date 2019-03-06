@@ -107,7 +107,7 @@ abstract class Store
     public function setProjectContext(string $projectContext)
     {
         if (\PerspectiveAPI\Connector::projectExists($projectContext) === false) {
-            throw new \Exception('Project doesn\'t exist.');
+            throw new \PerspectiveAPI\Exception\InvalidDataException('Project doesn\'t exist.');
         }
 
         $this->projectContext = $projectContext;

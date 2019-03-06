@@ -41,6 +41,15 @@ class Group extends AbstractObject
      */
     public function __construct(UserStore $store, string $id, string $groupName=null)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid User Group id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $this->store = $store;
         $this->id    = $id;
 

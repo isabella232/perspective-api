@@ -66,6 +66,15 @@ class DataStore extends Store
      */
     public function getDataRecord(string $id)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid Data record id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $dataRecord = \PerspectiveAPI\Connector::getDataRecord($this->code, $id);
         if ($dataRecord === null) {
             return null;
@@ -94,6 +103,15 @@ class DataStore extends Store
      */
     public function getUniqueDataRecord(string $propertyid, string $value)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid Data record id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $propertyid = $this->projectContext.'/'.$propertyid;
         $dataRecord = \PerspectiveAPI\Connector::getDataRecordByValue($this->code, $propertyid, $value);
         if ($dataRecord === null) {

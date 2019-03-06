@@ -62,6 +62,15 @@ class User extends AbstractObject
         string $firstName=null,
         string $lastName=null
     ) {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid User id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $this->store = $store;
         $this->id    = $id;
 
@@ -170,6 +179,15 @@ class User extends AbstractObject
      */
     final public function addToGroup(string $groupid)
     {
+        if (\PerspectiveAPI\Init::isValidID($groupid) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid User Group id (%s)'),
+                    $id
+                )
+            );
+        }
+
         if ($this->store->ownProjectContext() === false) {
             throw new \Exception('Operation out of own project context');
         }
@@ -188,6 +206,15 @@ class User extends AbstractObject
      */
     final public function removeFromGroup(string $groupid)
     {
+        if (\PerspectiveAPI\Init::isValidID($groupid) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid User Group id (%s)'),
+                    $id
+                )
+            );
+        }
+
         if ($this->store->ownProjectContext() === false) {
             throw new \Exception('Operation out of own project context');
         }

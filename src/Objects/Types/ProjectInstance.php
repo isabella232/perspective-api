@@ -36,6 +36,15 @@ class ProjectInstance extends AbstractObject
      */
     public function __construct(string $id, string $projectContext)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid Project Instance id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $this->id             = $id;
         $this->projectContext = $projectContext;
 

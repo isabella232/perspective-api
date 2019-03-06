@@ -58,7 +58,8 @@ abstract class Property
             throw new \Exception(_('Invalid owner object in property constructor'));
         }
 
-        $this->id = $propertyCode;
+        $validProperty = \PerspectiveAPI\Init::validatePropertyid($propertyCode);
+        $this->id      = $propertyCode;
 
     }//end __construct()
 

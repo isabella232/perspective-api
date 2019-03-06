@@ -155,10 +155,11 @@ abstract class AbstractObject
      */
     final public function property(string $propertyCode)
     {
+        $validProperty     = \PerspectiveAPI\Init::validatePropertyid($propertyCode);
         $propertyType      = substr(strrchr($propertyCode, '.'), 1);
         $propertyTypeClass = '\PerspectiveAPI\Property\Types\\'.ucfirst($propertyType);
         if (class_exists($propertyTypeClass) === false) {
-            throw new \Exception(sprintf('Unknown property type %s', $propertyType));
+            throw new \PerspectiveAPI\Exception\InvalidDataException(sprintf('Unknown property type %s', $propertyType));
         }
 
         return new $propertyTypeClass($this, $propertyCode);

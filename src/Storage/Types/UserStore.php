@@ -62,6 +62,15 @@ class UserStore extends Store
      */
     public function getUser(string $id)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid User id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $user = \PerspectiveAPI\Connector::getUser($this->code, $id);
         if ($user !== null) {
             return new \PerspectiveAPI\Objects\Types\User(
@@ -143,6 +152,15 @@ class UserStore extends Store
      */
     public function getGroup(string $id)
     {
+        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid User Group id (%s)'),
+                    $id
+                )
+            );
+        }
+
         $group = \PerspectiveAPI\Connector::getGroup($this->code, $id);
         if ($group !== null) {
             return new \PerspectiveAPI\Objects\Types\Group(

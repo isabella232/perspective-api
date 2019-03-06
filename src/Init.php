@@ -36,4 +36,42 @@ class Init
     }//end setConnectorAlias()
 
 
+    /**
+     * Returns true if the id is in the correct format.
+     *
+     * @param string $id The ID to test validity.
+     *
+     * @return boolean
+     */
+    public static function isValidID(string $id)
+    {
+        if (preg_match('/^\d+(\.\d+)+$/', $id) === 1) {
+            return true;
+        }
+
+        return false;
+
+    }//end isValidID()
+
+
+    /**
+     * Validates a property code is in the right format.
+     *
+     * @param string $propertyCode The property code to validate.
+     *
+     * @return boolean
+     * @throws \PerspectiveAPI\Exception\InvalidDataException When the property code is invalid.
+     */
+    public static function validatePropertyid(string $propertyCode)
+    {
+        $codeParts = explode('.', $propertyCode);
+        if (count($codeParts) < 2) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(sprintf('Propertyid (%s) is invalid', $propertyCode));
+        }
+
+        return true;
+
+    }//end validatePropertyid();
+
+
 }//end class
