@@ -103,11 +103,11 @@ class DataStore extends Store
      */
     public function getUniqueDataRecord(string $propertyid, string $value)
     {
-        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+        if (\PerspectiveAPI\Init::validatePropertyid($propertyid) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid Data record id (%s)'),
-                    $id
+                    _('Invalid propertyid (%s)'),
+                    $propertyid
                 )
             );
         }
