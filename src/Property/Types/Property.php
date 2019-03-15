@@ -3,7 +3,6 @@
  * Property base class.
  *
  * Aim is to have the one class per property type regardless of the property system type.
- * There is functions like prepareWrite and isAspected to help with that.
  *
  * We can use abstract base class here as opposed to traits (like for object types) because these classes can not be
  * be extended in template php (custom types).

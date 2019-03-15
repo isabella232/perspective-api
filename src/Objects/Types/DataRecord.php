@@ -10,14 +10,14 @@
 
 namespace PerspectiveAPI\Objects\Types;
 
-use \PerspectiveAPI\Objects\AspectedObject as AspectedObject;
+use \PerspectiveAPI\Objects\AbstractObject as AbstractObject;
 use \PerspectiveAPI\Objects\ReferenceTrait as ReferenceTrait;
 use \PerspectiveAPI\Storage\Types\DataStore as DataStore;
 
 /**
  * DataRecord Class.
  */
-class DataRecord extends AspectedObject
+class DataRecord extends AbstractObject
 {
 
     use ReferenceTrait;
