@@ -50,8 +50,10 @@ class Group extends AbstractObject
             );
         }
 
-        $this->store = $store;
-        $this->id    = $id;
+        $this->store    = $store;
+        $this->id       = $id;
+        $this->loadtime = time();
+        $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($this->getObjectType(), $this->store->getCode(), $this->id);
 
         if ($groupName !== null) {
             $this->groupName = $groupName;

@@ -41,8 +41,10 @@ class DataRecord extends AbstractObject
             );
         }
 
-        $this->store = $store;
-        $this->id    = $id;
+        $this->store    = $store;
+        $this->id       = $id;
+        $this->loadtime = time();
+        $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($this->getObjectType(), $this->store->getCode(), $this->id);
 
     }//end __construct()
 

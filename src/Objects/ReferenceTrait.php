@@ -70,8 +70,8 @@ trait ReferenceTrait
                     $dataStore,
                     $result['id']
                 );
-            }
-        }
+            }//end if
+        }//end foreach
 
         if ($multiple === false) {
             $references = $references[0];
@@ -94,7 +94,13 @@ trait ReferenceTrait
     {
         $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $objects       = self::getReferencedObjectsArray($objects);
-        return \PerspectiveAPI\Connector::addReference($this->getObjectType(), $this->getID(), $this->getStorageCode(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::addReference(
+            $this->getObjectType(),
+            $this->getID(),
+            $this->getStorageCode(),
+            $referenceCode,
+            $objects
+        );
 
     }//end addReference()
 
@@ -111,7 +117,13 @@ trait ReferenceTrait
     {
         $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $objects       = self::getReferencedObjectsArray($objects);
-        return \PerspectiveAPI\Connector::setReference($this->getObjectType(), $this->getID(), $this->getStorageCode(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::setReference(
+            $this->getObjectType(),
+            $this->getID(),
+            $this->getStorageCode(),
+            $referenceCode,
+            $objects
+        );
 
     }//end setReference()
 
@@ -128,7 +140,13 @@ trait ReferenceTrait
     {
         $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $objects       = self::getReferencedObjectsArray($objects);
-        return \PerspectiveAPI\Connector::deleteReference($this->getObjectType(), $this->getID(), $this->getStorageCode(), $referenceCode, $objects);
+        return \PerspectiveAPI\Connector::deleteReference(
+            $this->getObjectType(),
+            $this->getID(),
+            $this->getStorageCode(),
+            $referenceCode,
+            $objects
+        );
 
     }//end deleteReference()
 
@@ -136,8 +154,8 @@ trait ReferenceTrait
     /**
      * Helper function to convert $objects argument to a flat object data array for reference related functions.
      *
-     * @param mixed  $objects       One or more objects to add to the reference, retrieved from the store that the
-     *                              reference points to.
+     * @param mixed $objects One or more objects to add to the reference, retrieved from the store that the
+     *                       reference points to.
      *
      * @return array
      * @throws ReadOnlyException Thrown when error occurs.

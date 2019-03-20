@@ -31,6 +31,19 @@ abstract class AbstractObject
      */
     protected $store = null;
 
+    /**
+     * The object load time.
+     *
+     * @var int
+     */
+    protected $loadtime = null;
+
+    /**
+     * Flag the object is being remapped to another id.
+     *
+     * @var string
+     */
+    protected $remapid = null;
 
     /**
      * Gets the internal ID of the data record.
@@ -181,12 +194,89 @@ abstract class AbstractObject
         ) {
             $objectType = 'user';
         } else if ($this instanceof \PerspectiveAPI\Objects\Types\ProjectInstance) {
-            $objectType = 'projectinstance';
+            $objectType = 'project';
         }
 
         return $objectType;
 
     }//end getObjectType()
 
+
+    /**
+     * Validate the object id.
+     *
+     * Call BEFORE using $this->id in a READ operation.
+     * Call BEFORE and AFTER a READ operation. Repeat READ operation if invalid.
+     *
+     * No need to use in a WRITE operation as it acquires locks to the object.
+     * No need to use for Page objects as there is no WRITE operations in the API.
+     *
+     * Returns FALSE if the object id has changed during the current process.
+     * It will update $this->id to the new object id so that the next READ request occurs on the correct id.
+     *
+     * Do not document as part of API.
+     * Didn't want to make this public was but forced to for the property objects to call.
+     *
+     * @return boolean
+     */
+    final public function validateId()
+    {
+        $objectType  = $this->getObjectType();
+        $storageCode = $this->getStorageCode();
+        if ($objectType === 'project') {
+            // Project instance excempt because the object id is the instanceid which is fixed.
+            return true;
+        }
+
+        // On load time, we didn't find that we are remapping and it has been less than 5 seconds, we can return
+        // because the background remapping process waits 5 seconds before it starts.
+        $wait = 5; // TODO: needs a constant.
+        $time = (time() - $this->loadtime);
+        if ($this->remapid === null && ($time < $wait)) {
+            return true;
+        }
+
+        if ($this->remapid !== null) {
+            // On load time, we found that we are remapping we need to check if it has finished.
+            $remapid = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
+            if ($remapid !== null) {
+                // Still remapping. Note here $remapid === $this->remapid, impossible otherwise.
+                return true;
+            } else {
+                // Must of finished.
+                if ($time > $wait) {
+                    // Its been longer than 5 seconds since we last checked, anything could have happened.
+                    // Possible for a second chained remap to have started and finished.
+                    $this->id = \PerspectiveAPI\Connector::getRemapid($objectType, $storageCode, $this->remapid);
+                } else {
+                    $this->id = $this->remapid;
+                }
+
+                $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
+                $this->loadtime = time();
+
+                return false;
+            }
+        } else if ($time > $wait) {
+            // Its not remapping and its been longer than 5 seconds since we last checked, anything could have happened
+            // especially in a really long running process. Start over, check both DB and Redis.
+            $objectid = \PerspectiveAPI\Connector::getRemapid($objectType, $storageCode, $this->id, true);
+            if ($objectid === null) {
+                $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
+                $this->loadtime = time();
+
+                return true;
+            } else {
+                $this->id       = $objectid;
+                $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
+                $this->loadtime = time();
+
+                return false;
+            }
+        }//end if
+
+        return true;
+
+    }//end validateId()
 
 }//end class

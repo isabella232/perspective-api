@@ -71,8 +71,10 @@ class User extends AbstractObject
             );
         }
 
-        $this->store = $store;
-        $this->id    = $id;
+        $this->store    = $store;
+        $this->id       = $id;
+        $this->loadtime = time();
+        $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($this->getObjectType(), $this->store->getCode(), $this->id);
 
         if ($username !== null) {
             $this->username = $username;
