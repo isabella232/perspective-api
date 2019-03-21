@@ -70,14 +70,25 @@ abstract class Property
      */
     public function getValue()
     {
-        $store = $this->object->getStorage();
+        $this->object->validateId();
 
-        return \PerspectiveAPI\Connector::getPropertyValue(
+        $value = \PerspectiveAPI\Connector::getPropertyValue(
             $this->object->getObjectType(),
             $this->object->getStorageCode(),
             $this->object->getID(),
             $this->object->getProjectContext().'/'.$this->id
         );
+
+        if ($this->object->validateId() === false) {
+            $value = \PerspectiveAPI\Connector::getPropertyValue(
+                $this->object->getObjectType(),
+                $this->object->getStorageCode(),
+                $this->object->getID(),
+                $this->object->getProjectContext().'/'.$this->id
+            );
+        }
+
+        return $value;
 
     }//end getValue()
 

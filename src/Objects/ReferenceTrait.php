@@ -28,6 +28,8 @@ trait ReferenceTrait
      */
     final public function getReference(string $referenceCode)
     {
+        $this->validateId();
+
         $referenceCode = $this->getProjectContext().'/'.$referenceCode;
         $results       = \PerspectiveAPI\Connector::getReference(
             $this->getObjectType(),
@@ -35,6 +37,15 @@ trait ReferenceTrait
             $this->getStorageCode(),
             $referenceCode
         );
+
+        if ($this->validateId() === false) {
+            $results = \PerspectiveAPI\Connector::getReference(
+                $this->getObjectType(),
+                $this->getID(),
+                $this->getStorageCode(),
+                $referenceCode
+            );
+        }
 
         if ($results === null) {
             return null;

@@ -50,10 +50,14 @@ class Group extends AbstractObject
             );
         }
 
-        $this->store    = $store;
-        $this->id       = $id;
-        $this->loadtime = time();
-        $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($this->getObjectType(), $this->store->getCode(), $this->id);
+        $this->store       = $store;
+        $this->id          = $id;
+        $this->loadtime    = time();
+        $this->remappingid = \PerspectiveAPI\Connector::getRemappingid(
+            $this->getObjectType(),
+            $this->store->getCode(),
+            $this->id
+        );
 
         if ($groupName !== null) {
             $this->groupName = $groupName;
@@ -69,7 +73,14 @@ class Group extends AbstractObject
      */
     public function getMembers()
     {
-        return \PerspectiveAPI\Connector::getGroupMembers($this->getID(), $this->store->getCode());
+        $this->validateId();
+
+        $members = \PerspectiveAPI\Connector::getGroupMembers($this->getID(), $this->store->getCode());
+        if ($this->validateId() === false) {
+            $members = \PerspectiveAPI\Connector::getGroupMembers($this->getID(), $this->store->getCode());
+        }
+
+        return $members;
 
     }//end getMembers()
 

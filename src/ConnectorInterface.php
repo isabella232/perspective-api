@@ -542,4 +542,28 @@ interface ConnectorInterface
     public static function getAutoloadedFilepaths();
 
 
+    /**
+     * Returns ID of object pending remap to (Redis).
+     *
+     * @param string $objectType The object type.
+     * @param string $storeCode  The store code.
+     * @param string $id         The object ID.
+     *
+     * @return string
+     */
+    public static function getRemappingid(string $objectType, string $storeCode, string $id);
+
+
+    /**
+     * Returns ID of object pending remap to (Redis) and finished remapping to (DB).
+     *
+     * @param string $objectType The object type.
+     * @param string $storeCode  The store code.
+     * @param string $id         The object ID.
+     *
+     * @return array
+     */
+    public static function getRemaps(string $objectType, string $storeCode, string $id);
+
+
 }//end interface

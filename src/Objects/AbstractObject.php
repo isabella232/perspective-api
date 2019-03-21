@@ -16,7 +16,6 @@ namespace PerspectiveAPI\Objects;
 abstract class AbstractObject
 {
 
-
     /**
      * ID of the data record object.
      *
@@ -34,7 +33,7 @@ abstract class AbstractObject
     /**
      * The object load time.
      *
-     * @var int
+     * @var integer
      */
     protected $loadtime = null;
 
@@ -43,7 +42,8 @@ abstract class AbstractObject
      *
      * @var string
      */
-    protected $remapid = null;
+    protected $remappingid = null;
+
 
     /**
      * Gets the internal ID of the data record.
@@ -230,46 +230,50 @@ abstract class AbstractObject
 
         // On load time, we didn't find that we are remapping and it has been less than 5 seconds, we can return
         // because the background remapping process waits 5 seconds before it starts.
-        $wait = 5; // TODO: needs a constant.
+        $wait = 5;
         $time = (time() - $this->loadtime);
-        if ($this->remapid === null && ($time < $wait)) {
+        if ($this->remappingid === null && ($time < $wait)) {
             return true;
         }
 
-        if ($this->remapid !== null) {
+        if ($this->remappingid !== null) {
             // On load time, we found that we are remapping we need to check if it has finished.
-            $remapid = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
-            if ($remapid !== null) {
-                // Still remapping. Note here $remapid === $this->remapid, impossible otherwise.
+            $remappingid = \PerspectiveAPI\Connector::getRemappingid($objectType, $storageCode, $this->id);
+            if ($remappingid !== null) {
+                // Still remapping. Note here $remappingid === $this->remappingid, impossible otherwise.
                 return true;
             } else {
                 // Must of finished.
+                $this->id          = $this->remappingid;
+                $this->remappingid = null;
+                $this->loadtime    = time();
                 if ($time > $wait) {
                     // Its been longer than 5 seconds since we last checked, anything could have happened.
                     // Possible for a second chained remap to have started and finished.
-                    $this->id = \PerspectiveAPI\Connector::getRemapid($objectType, $storageCode, $this->remapid);
-                } else {
-                    $this->id = $this->remapid;
+                    $remaps = \PerspectiveAPI\Connector::getRemaps($objectType, $storageCode, $this->id);
+                    if ($remaps['remappedid'] !== null) {
+                        $this->id = $remaps['remappedid'];
+                    }
+
+                    $this->remappingid = $remaps['remappingid'];
+                    $this->loadtime    = time();
                 }
 
-                $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
-                $this->loadtime = time();
-
                 return false;
-            }
+            }//end if
         } else if ($time > $wait) {
             // Its not remapping and its been longer than 5 seconds since we last checked, anything could have happened
             // especially in a really long running process. Start over, check both DB and Redis.
-            $objectid = \PerspectiveAPI\Connector::getRemapid($objectType, $storageCode, $this->id, true);
-            if ($objectid === null) {
-                $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
-                $this->loadtime = time();
+            $remaps = \PerspectiveAPI\Connector::getRemaps($objectType, $storageCode, $this->id);
+            if ($remaps['remappedid'] === null) {
+                $this->remappingid = $remaps['remappingid'];
+                $this->loadtime    = time();
 
                 return true;
             } else {
-                $this->id       = $objectid;
-                $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($objectType, $storageCode, $this->id);
-                $this->loadtime = time();
+                $this->id          = $remaps['remappedid'];
+                $this->remappingid = $remaps['remappingid'];
+                $this->loadtime    = time();
 
                 return false;
             }
@@ -278,5 +282,6 @@ abstract class AbstractObject
         return true;
 
     }//end validateId()
+
 
 }//end class

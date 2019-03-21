@@ -22,6 +22,7 @@ class DataRecord extends AbstractObject
 
     use ReferenceTrait;
 
+
     /**
      * Construct function for Data Record.
      *
@@ -41,10 +42,14 @@ class DataRecord extends AbstractObject
             );
         }
 
-        $this->store    = $store;
-        $this->id       = $id;
-        $this->loadtime = time();
-        $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($this->getObjectType(), $this->store->getCode(), $this->id);
+        $this->store       = $store;
+        $this->id          = $id;
+        $this->loadtime    = time();
+        $this->remappingid = \PerspectiveAPI\Connector::getRemappingid(
+            $this->getObjectType(),
+            $this->store->getCode(),
+            $this->id
+        );
 
     }//end __construct()
 
@@ -58,7 +63,25 @@ class DataRecord extends AbstractObject
      */
     public function getParents(int $depth=null)
     {
-        return \PerspectiveAPI\Connector::getParents($this->getObjectType(), $this->store->getCode(), $this->getID(), $depth);
+        $this->validateId();
+
+        $parents = \PerspectiveAPI\Connector::getParents(
+            $this->getObjectType(),
+            $this->store->getCode(),
+            $this->getID(),
+            $depth
+        );
+
+        if ($this->validateId() === false) {
+            $parents = \PerspectiveAPI\Connector::getParents(
+                $this->getObjectType(),
+                $this->store->getCode(),
+                $this->getID(),
+                $depth
+            );
+        }
+
+        return $parents;
 
     }//end getParents()
 
@@ -72,7 +95,25 @@ class DataRecord extends AbstractObject
      */
     public function getChildren(int $depth=null)
     {
-        return \PerspectiveAPI\Connector::getChildren($this->getObjectType(), $this->store->getCode(), $this->getID(), $depth);
+        $this->validateId();
+
+        $children = \PerspectiveAPI\Connector::getChildren(
+            $this->getObjectType(),
+            $this->store->getCode(),
+            $this->getID(),
+            $depth
+        );
+
+        if ($this->validateId() === false) {
+            $children = \PerspectiveAPI\Connector::getChildren(
+                $this->getObjectType(),
+                $this->store->getCode(),
+                $this->getID(),
+                $depth
+            );
+        }
+
+        return $children;
 
     }//end getChildren()
 

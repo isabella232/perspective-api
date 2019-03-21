@@ -71,10 +71,14 @@ class User extends AbstractObject
             );
         }
 
-        $this->store    = $store;
-        $this->id       = $id;
-        $this->loadtime = time();
-        $this->remapid  = \PerspectiveAPI\Connector::getPendingRemapid($this->getObjectType(), $this->store->getCode(), $this->id);
+        $this->store       = $store;
+        $this->id          = $id;
+        $this->loadtime    = time();
+        $this->remappingid = \PerspectiveAPI\Connector::getRemappingid(
+            $this->getObjectType(),
+            $this->store->getCode(),
+            $this->id
+        );
 
         if ($username !== null) {
             $this->username = $username;
@@ -233,7 +237,14 @@ class User extends AbstractObject
      */
     final public function getGroups()
     {
-        return \PerspectiveAPI\Connector::getUserGroups($this->getID(), $this->store->getCode());
+        $this->validateId();
+
+        $groups = \PerspectiveAPI\Connector::getUserGroups($this->getID(), $this->store->getCode());
+        if ($this->validateId() === false) {
+            $groups = \PerspectiveAPI\Connector::getUserGroups($this->getID(), $this->store->getCode());
+        }
+
+        return $groups;
 
     }//end getGroups()
 
