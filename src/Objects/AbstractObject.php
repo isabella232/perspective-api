@@ -221,12 +221,13 @@ abstract class AbstractObject
      */
     final public function validateId()
     {
-        $objectType  = $this->getObjectType();
-        $storageCode = $this->getStorageCode();
-        if ($objectType === 'project') {
+        if ($this instanceof \PerspectiveAPI\Objects\Types\ProjectInstance) {
             // Project instance excempt because the object id is the instanceid which is fixed.
             return true;
         }
+
+        $objectType  = $this->getObjectType();
+        $storageCode = $this->getStorageCode();
 
         // On load time, we didn't find that we are remapping and it has been less than 5 seconds, we can return
         // because the background remapping process waits 5 seconds before it starts.

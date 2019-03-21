@@ -179,14 +179,9 @@ trait ReferenceTrait
 
         $referencedObjects = [];
         foreach ($objects as $object) {
-            if ($object instanceof \PerspectiveAPI\Objects\Types\User) {
-                $referencedObjectType = 'user';
-            } else if ($object instanceof \PerspectiveAPI\Objects\Types\Group) {
-                $referencedObjectType = 'userGroup';
-            } else if ($object instanceof \PerspectiveAPI\Objects\Types\DataRecord) {
-                $referencedObjectType = 'data';
-            } else {
-                throw new ReadOnlyException('Invalid referenced object');
+            $referencedObjectType = $object->getObjectType();
+            if ($referencedObjectType !== 'user' && $referencedObjectType !== 'data') {
+                throw new \PerspectiveAPI\Exception\InvalidDataException('Invalid referenced object');
             }
 
             $referencedObjects[] = [
