@@ -64,22 +64,6 @@ class Authentication
             $context = self::getProjectContext();
             if ($user->getStorage()->getProjectContext() !== $context) {
                 $user->getStorage()->setProjectContext($context);
-                // TODO: @mhaidar alternative way to avoid needing a setProjectContext function. Not sure how user
-                // remapping functionality will fit in later.
-                /*$userStore  = new \PerspectiveAPI\Storage\Types\UserStore(
-                    $user->getStorage()->getCode(),
-                    $context
-                );
-                $typeClass  = '\\'.get_class($user);
-                self::$user = new $typeClass(
-                    $userStore,
-                    $user->getId(),
-                    $user->getUsername(),
-                    $user->getFirstName(),
-                    $user->getLastName()
-                );
-
-                return self::$user;*/
             }
         }
 

@@ -58,9 +58,9 @@ class User extends AbstractObject
     public function __construct(
         UserStore $store,
         string $id,
-        string $username=null,
-        string $firstName=null,
-        string $lastName=null
+        string $username,
+        string $firstName,
+        string $lastName
     ) {
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
@@ -80,17 +80,10 @@ class User extends AbstractObject
             $this->id
         );
 
-        if ($username !== null) {
-            $this->username = $username;
-        }
 
-        if ($firstName !== null) {
-            $this->firstName = $firstName;
-        }
-
-        if ($lastName !== null) {
-            $this->lastName = $lastName;
-        }
+        $this->username  = $username;
+        $this->firstName = $firstName;
+        $this->lastName  = $lastName;
 
     }//end __construct()
 

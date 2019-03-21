@@ -35,11 +35,11 @@ class Group extends AbstractObject
      *
      * @param object $store     The store the user group record belongs to.
      * @param string $id        The id of the user group.
-     * @param string $groupName Optional name of the group.
+     * @param string $groupName The name of the group.
      *
      * @return void
      */
-    public function __construct(UserStore $store, string $id, string $groupName=null)
+    public function __construct(UserStore $store, string $id, string $groupName)
     {
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
@@ -59,9 +59,7 @@ class Group extends AbstractObject
             $this->id
         );
 
-        if ($groupName !== null) {
-            $this->groupName = $groupName;
-        }
+        $this->groupName = $groupName;
 
     }//end __construct()
 
