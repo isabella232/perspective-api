@@ -44,6 +44,18 @@ abstract class AbstractObject
      */
     protected $remappingid = null;
 
+    /**
+     * The time to wait before starting a remap process.
+     *
+     * This is the time between flagging a processing for remapping in Redis and then starting the DB remap process.
+     * This is used to give other processes a chance to finish their operations with the original id without having
+     * to constantly check the DB and Redis for a remap entry.
+     *
+     * @var integer
+     * @see Perspective\Bootstrap::REMAP_WAIT
+     *      Keep value in sync.
+     */
+    const REMAP_WAIT = 5;
 
     /**
      * Gets the internal ID of the data record.
@@ -231,7 +243,7 @@ abstract class AbstractObject
 
         // On load time, we didn't find that we are remapping and it has been less than 5 seconds, we can return
         // because the background remapping process waits 5 seconds before it starts.
-        $wait = 5;
+        $wait = static::REMAP_WAIT;
         $time = (time() - $this->loadtime);
         if ($this->remappingid === null && ($time < $wait)) {
             return true;
