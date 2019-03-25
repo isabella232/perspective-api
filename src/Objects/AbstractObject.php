@@ -253,7 +253,7 @@ abstract class AbstractObject
             // On load time, we found that we are remapping we need to check if it has finished.
             $remappingid = \PerspectiveAPI\Connector::getRemappingid($objectType, $storageCode, $this->id);
             if ($remappingid !== null) {
-                // Still remapping. Note here $remappingid === $this->remappingid, impossible otherwise.
+                // Still remapping. Note here $remappingid === $this->remappingid because we used $this->id as the arg.
                 return true;
             } else {
                 // Must of finished.
