@@ -140,7 +140,7 @@ class UserStore extends Store
 
         throw new \Exception('Failed to create a new user group');
 
-    }//end createUser()
+    }//end createGroup()
 
 
     /**
@@ -173,6 +173,64 @@ class UserStore extends Store
         return null;
 
     }//end getGroup()
+
+
+    /**
+     * Return the user object that has the unique property value.
+     *
+     * @param string $propertyid The ID of the unique property.
+     * @param string $value      The value of the unique property.
+     *
+     * @return null|object
+     */
+    public function getUniqueUser(string $propertyid, string $value)
+    {
+        $user = $this->getStoreObjectByUniquePropertyValue('user', $propertyid, $value);
+        return $user;
+
+    }//end getUniqueUser()
+
+
+    /**
+     * Return the user group object that has the unique property value.
+     *
+     * @param string $propertyid The ID of the unique property.
+     * @param string $value      The value of the unique property.
+     *
+     * @return null|object
+     */
+    public function getUniqueGroup(string $propertyid, string $value)
+    {
+        $userGroup = $this->getStoreObjectByUniquePropertyValue('group', $propertyid, $value);
+        return $userGroup;
+
+    }//end getUniqueGroup()
+
+
+    /**
+     * Given object info for a type it will return the object.
+     *
+     * @param string $baseType   Getting a dataRecord|user|group.
+     * @param array  $objectInfo Object info applicable to instantiating that type.  In this case 'id' & 'groupName' for
+     *                           groups.  For users it is 'id', 'username', 'firstName' & 'lastName'.
+     *
+     * @return object
+     */
+    protected function getStoreObjectFromObjectInfo(string $baseType, array $objectInfo)
+    {
+        if ($objectInfo['typeClass'] === 'group') {
+            return new \PerspectiveAPI\Objects\Types\Group($this, $objectInfo['id'], $objectInfo['groupName']);
+        } else {
+            return new \PerspectiveAPI\Objects\Types\User(
+                $this,
+                $objectInfo['id'],
+                $objectInfo['username'],
+                $objectInfo['firstName'],
+                $objectInfo['lastName']
+            );
+        }
+
+    }//end getStoreObjectFromObjectInfo()
 
 
 }//end class

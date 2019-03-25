@@ -103,28 +103,25 @@ class DataStore extends Store
      */
     public function getUniqueDataRecord(string $propertyid, string $value)
     {
-        if (\PerspectiveAPI\Init::validatePropertyid($propertyid) === false) {
-            throw new \PerspectiveAPI\Exception\InvalidDataException(
-                sprintf(
-                    _('Invalid propertyid (%s)'),
-                    $propertyid
-                )
-            );
-        }
-
-        $propertyid = $this->projectContext.'/'.$propertyid;
-        $dataRecord = \PerspectiveAPI\Connector::getDataRecordByValue($this->code, $propertyid, $value);
-        if ($dataRecord === null) {
-            return null;
-        }
-
-        if (class_exists($dataRecord['typeClass']) === false) {
-            throw new \Exception('Type class can not be found');
-        }
-
-        return new $dataRecord['typeClass']($this, $dataRecord['id']);
+        $dataRecord = $this->getStoreObjectByUniquePropertyValue('dataRecord', $propertyid, $value);
+        return $dataRecord;
 
     }//end getUniqueDataRecord()
+
+
+    /**
+     * Given object info for a type it will return the object.
+     *
+     * @param string $baseType   Getting a dataRecord|user|group.
+     * @param array  $objectInfo Object info applicable to instantiating that type.  In this case 'id'.
+     *
+     * @return object
+     */
+    protected function getStoreObjectFromObjectInfo(string $baseType, array $objectInfo)
+    {
+        return new $objectInfo['typeClass']($this, $objectInfo['id']);
+
+    }//end getStoreObjectFromObjectInfo()
 
 
 }//end class

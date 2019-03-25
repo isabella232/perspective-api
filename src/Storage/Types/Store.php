@@ -25,10 +25,10 @@ abstract class Store
     protected $id = null;
 
      /**
-     * The store code.
-     *
-     * @var string|null
-     */
+      * The store code.
+      *
+      * @var string|null
+      */
     protected $code = null;
 
     /**
@@ -39,6 +39,7 @@ abstract class Store
      * @var string|null
      */
     protected $projectContext = null;
+
 
     /**
      * Constructor for Store Class.
@@ -69,7 +70,7 @@ abstract class Store
     {
         return $this->id;
 
-    }//end getId()
+    }//end getID()
 
 
     /**
@@ -132,6 +133,58 @@ abstract class Store
         return false;
 
     }//end ownProjectContext()
+
+
+    /**
+     * Call to get a store object by a unqiue propery value.
+     *
+     * @param string $baseType   Getting a dataRecord|user|group.
+     * @param string $propertyid The propertyid to search.
+     * @param string $value      The value to search by.
+     *
+     * @return object
+     */
+    protected function getStoreObjectByUniquePropertyValue(string $baseType, string $propertyid, string $value)
+    {
+        if (\PerspectiveAPI\Init::validatePropertyid($propertyid) === false) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(
+                sprintf(
+                    _('Invalid propertyid (%s)'),
+                    $propertyid
+                )
+            );
+        }
+
+        $propertyid = $this->projectContext.'/'.$propertyid;
+        $objectInfo = \PerspectiveAPI\Connector::getObjectInfoByUniquePropertyValue(
+            $baseType,
+            $this->code,
+            $propertyid,
+            $value
+        );
+
+        if ($objectInfo === null) {
+            return null;
+        }
+
+        if (class_exists($objectInfo['typeClass']) === false) {
+            throw new \Exception('Type class can not be found');
+        }
+
+        return $this->getStoreObjectFromObjectInfo($baseType, $objectInfo);
+
+    }//end getStoreObjectByUniquePropertyValue()
+
+
+    /**
+     * Given object info for a type it will return the object.
+     *
+     * @param string $baseType   Getting a dataRecord|user|group.
+     * @param array  $objectInfo Object info applicable to instantiating that type.
+     *
+     * @return object
+     */
+    abstract protected function getStoreObjectFromObjectInfo(string $baseType, array $objectInfo);
 
 
 }//end class
