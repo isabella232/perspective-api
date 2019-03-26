@@ -28,7 +28,12 @@ class Number extends Property
      */
     public function increment(float $value=1)
     {
-        $this->setValue($this->getValue() + $value);
+        \PerspectiveAPI\Connector::incrementPropertyValue(
+            $this->id,
+            $this->object->getStorageCode(),
+            $this->object->getObjectType(),
+            $value
+        );
 
     }//end increment()
 
@@ -42,7 +47,12 @@ class Number extends Property
      */
     public function decrement(float $value=1)
     {
-        $this->setValue($this->getValue() - $value);
+        \PerspectiveAPI\Connector::decrementPropertyValue(
+            $this->id,
+            $this->object->getStorageCode(),
+            $this->object->getObjectType(),
+            $value
+        );
 
     }//end decrement()
 

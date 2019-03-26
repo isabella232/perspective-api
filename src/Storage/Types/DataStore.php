@@ -124,4 +124,41 @@ class DataStore extends Store
     }//end getStoreObjectFromObjectInfo()
 
 
+    /**
+     * Cast data record.
+     *
+     * @param object $dataRecordObject   The data record object.
+     * @param string $dataRecordTypeCode The data record type code.
+     *
+     * @return void
+     */
+    final public function castDataRecord(
+        PerspectiveAPI\Objects\Types\DataRecord &$dataRecordObject,
+        string $dataRecordTypeCode
+    ) {
+        if ($dataRecordObject->getStorage() !== $this) {
+            throw new \PerspectiveAPI\Exception\InvalidDataException(_('Data record object does not belong to this data store'));
+        }
+
+        $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName('data', $dataRecordTypeCode);
+        if ($typeClass === null) {
+            throw new \Exception('Unknown custom data record type to create');
+        }
+
+        if (class_exists($typeClass) === false) {
+            throw new \Exception('Type class can not be found');
+        }
+
+        $dataRecordid = $dataRecordObject->id
+        \PerspectiveAPI\Connector::castDataRecord(
+            $dataRecordid,
+            $dataRecordTypeCode,
+            $dataRecordObject->getStorageCode()
+        );
+
+        $dataRecordObject = new $typeClass($this, $dataRecordid);
+
+    }//end castDataRecord()
+
+
 }//end class
