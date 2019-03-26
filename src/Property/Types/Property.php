@@ -104,7 +104,6 @@ abstract class Property
      */
     public function setValue($value)
     {
-        $store = $this->object->getStorage();
         \PerspectiveAPI\Connector::setPropertyValue(
             $this->object->getObjectType(),
             $this->object->getStorageCode(),
@@ -125,8 +124,6 @@ abstract class Property
      */
     public function deleteValue()
     {
-        $store = $this->object->getStorage();
-
         \PerspectiveAPI\Connector::deletePropertyValue(
             $this->object->getObjectType(),
             $this->object->getStorageCode(),

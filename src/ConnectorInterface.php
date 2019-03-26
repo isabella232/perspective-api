@@ -579,27 +579,43 @@ interface ConnectorInterface
     /**
      * Returns the incremented value of the property.
      *
-     * @param string $propertyCode The property code we are incrementing.
-     * @param string $storeCode    The store code.
-     * @param string $objectType   The object type.
-     * @param mixed  $value        Integer|Float to increment by.
+     * @param string        $objectType   The object type.
+     * @param string        $storeCode    The store code.
+     * @param string        $id           The object ID.
+     * @param string        $propertyCode The property code to get value.
+     * @param integer|float $value        The value to increment by.
      *
      * @return integer|float
+     * @throws InvalidDataException Thrown property code is not found.
      */
-    public static function incrementPropertyValue(string $propertyCode, string $storeCode, string $objectType, $value);
+    public static function incrementPropertyValue(
+        string $objectType,
+        string $storeCode,
+        string $id,
+        string $propertyCode,
+        $value
+    );
 
 
     /**
      * Returns the decremented value of the property.
      *
-     * @param string $propertyCode The property code we are incrementing.
-     * @param string $storeCode    The store code.
-     * @param string $objectType   The object type.
-     * @param mixed  $value        Integer|Float to increment by.
+     * @param string        $objectType   The object type.
+     * @param string        $storeCode    The store code.
+     * @param string        $id           The object ID.
+     * @param string        $propertyCode The property code to get value.
+     * @param integer|float $value        The value to decrement by.
      *
      * @return integer|float
+     * @throws InvalidDataException Thrown property code is not found.
      */
-    public static function decrementPropertyValue(string $propertyCode, string $storeCode, string $objectType, $value);
+    public static function decrementPropertyValue(
+        string $objectType,
+        string $storeCode,
+        string $id,
+        string $propertyCode,
+        $value
+    );
 
 
     /**

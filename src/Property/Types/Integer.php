@@ -29,9 +29,10 @@ class Integer extends Property
     public function increment(int $value=1)
     {
         \PerspectiveAPI\Connector::incrementPropertyValue(
-            $this->id,
-            $this->object->getStorageCode(),
             $this->object->getObjectType(),
+            $this->object->getStorageCode(),
+            $this->object->getID(),
+            $this->object->getProjectContext().'/'.$this->id,
             $value
         );
 
@@ -48,9 +49,10 @@ class Integer extends Property
     public function decrement(int $value=1)
     {
         \PerspectiveAPI\Connector::decrementPropertyValue(
-            $this->id,
-            $this->object->getStorageCode(),
             $this->object->getObjectType(),
+            $this->object->getStorageCode(),
+            $this->object->getID(),
+            $this->object->getProjectContext().'/'.$this->id,
             $value
         );
 
