@@ -580,7 +580,7 @@ interface ConnectorInterface
      * Returns the incremented value of the property.
      *
      * @param string $propertyCode The property code we are incrementing.
-     c
+     * @param string $storeCode    The store code.
      * @param string $objectType   The object type.
      * @param mixed  $value        Integer|Float to increment by.
      *
