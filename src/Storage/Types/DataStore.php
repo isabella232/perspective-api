@@ -150,7 +150,7 @@ class DataStore extends Store
         }
 
         $dataRecordid = $dataRecordObject->id
-        \PerspectiveAPI\Connector::castDataRecord(
+        \PerspectiveAPI\Connector::setCustomType(
             $dataRecordid,
             $dataRecordTypeCode,
             $dataRecordObject->getStorageCode()

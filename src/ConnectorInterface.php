@@ -611,7 +611,7 @@ interface ConnectorInterface
      *
      * @return void
      */
-    public static function castDataRecord(string $dataRecordid, string $dataRecordTypeCode, string $storeCode);
+    public static function setCustomType(string $dataRecordid, string $dataRecordTypeCode, string $storeCode);
 
 
     /**
