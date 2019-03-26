@@ -149,7 +149,7 @@ class DataStore extends Store
             throw new \Exception('Type class can not be found');
         }
 
-        $dataRecordid = $dataRecordObject->id
+        $dataRecordid = $dataRecordObject->id;
         \PerspectiveAPI\Connector::setCustomType(
             $dataRecordid,
             $dataRecordTypeCode,
