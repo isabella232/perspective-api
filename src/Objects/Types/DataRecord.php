@@ -121,24 +121,22 @@ class DataRecord extends AbstractObject
     /**
      * Move data record.
      *
-     * @param string $parentDataRecordid The ID of the parent data record.
+     * @param string $parentid The ID of the parent data record.
      *
      * @return void
-     * @throws InvalidArgumentException Thrown when pageid or parentid is not valid.
-     * @throws ReadOnlyException        When request is in read only mode.
      */
-    final public static function moveDataRecord(string $parentDataRecordid)
+    public function moveDataRecord(string $parentid)
     {
-        if (\PerspectiveAPI\Init::isValidID($id) === false) {
+        if (\PerspectiveAPI\Init::isValidID($parentid) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
                     _('Invalid Data record id (%s)'),
-                    $id
+                    $parentid
                 )
             );
         }
 
-        \PerspectiveAPI\Connector::moveDataRecord($this->id, $parentDataRecordid, $this->getStorageCode());
+        \PerspectiveAPI\Connector::moveDataRecord($this->store->getCode(), $this->getID(), $parentid);
 
     }//end moveDataRecord()
 

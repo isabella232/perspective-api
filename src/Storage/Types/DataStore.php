@@ -133,14 +133,18 @@ class DataStore extends Store
      * @return void
      */
     final public function castDataRecord(
-        PerspectiveAPI\Objects\Types\DataRecord &$dataRecordObject,
+        \PerspectiveAPI\Objects\Types\DataRecord &$dataRecordObject,
         string $dataRecordTypeCode
     ) {
         if ($dataRecordObject->getStorage() !== $this) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(_('Data record object does not belong to this data store'));
         }
 
-        $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName('data', $dataRecordTypeCode);
+        $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName(
+            'data',
+            $dataRecordObject->getProjectContext().'/'.$dataRecordTypeCode
+        );
+
         if ($typeClass === null) {
             throw new \Exception('Unknown custom data record type to create');
         }
@@ -149,11 +153,12 @@ class DataStore extends Store
             throw new \Exception('Type class can not be found');
         }
 
-        $dataRecordid = $dataRecordObject->id;
+        $dataRecordid = $dataRecordObject->getID();
         \PerspectiveAPI\Connector::setCustomType(
+            $dataRecordObject->getObjectType(),
+            $dataRecordObject->getStorageCode(),
             $dataRecordid,
-            $dataRecordTypeCode,
-            $dataRecordObject->getStorageCode()
+            $dataRecordObject->getProjectContext().'/'.$dataRecordTypeCode
         );
 
         $dataRecordObject = new $typeClass($this, $dataRecordid);
