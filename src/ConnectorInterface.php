@@ -243,12 +243,12 @@ interface ConnectorInterface
      *
      * @param string  $objectType The object type.
      * @param string  $storeCode  The store code.
-     * @param string  $id         The object ID.
+     * @param string  $id         The object ID. When it is null, the top level objects are returned.
      * @param integer $depth      The max depth.
      *
      * @return array
      */
-    public static function getChildren(string $objectType, string $storeCode, string $id, int $depth=null);
+    public static function getChildren(string $objectType, string $storeCode, string $id=null, int $depth=null);
 
 
     /**

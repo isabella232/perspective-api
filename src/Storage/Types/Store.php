@@ -187,4 +187,14 @@ abstract class Store
     abstract protected function getStoreObjectFromObjectInfo(string $baseType, array $objectInfo);
 
 
+    /**
+     * Returns a flat list of data record's children including their dataRecordid and level.
+     *
+     * @param integer $depth The max depth.
+     *
+     * @return array
+     */
+    abstract protected function getChildren(int $depth=null);
+
+
 }//end class

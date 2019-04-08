@@ -233,4 +233,18 @@ class UserStore extends Store
     }//end getStoreObjectFromObjectInfo()
 
 
+    /**
+     * Returns a flat list of data record's children including their dataRecordid and level.
+     *
+     * @param integer $depth The max depth.
+     *
+     * @return array
+     */
+    final public function getChildren(int $depth=null)
+    {
+        return \PerspectiveAPI\Connector::getChildren('user', $this->getCode(), null, $depth);
+
+    }//end getChildren()
+
+
 }//end class
