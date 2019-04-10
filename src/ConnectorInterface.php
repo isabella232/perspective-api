@@ -296,7 +296,7 @@ interface ConnectorInterface
      * @throws InvalidDataException     Thrown when parent data record is not found.
      * @throws InvalidArgumentException Thrown when parent data record ID is not valid.
      */
-    public static function createDataRecord(string $storeCode, string $customType, string $parent=null);
+    public static function createDataRecord(string $storeCode, string $customType=null, string $parent=null);
 
 
     /**
