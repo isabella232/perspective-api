@@ -65,7 +65,7 @@ class User extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid User id (%s)'),
+                    'Invalid User id (%s)',
                     $id
                 )
             );
@@ -181,7 +181,7 @@ class User extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($groupid) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid User Group id (%s)'),
+                    'Invalid User Group id (%s)',
                     $id
                 )
             );
@@ -208,7 +208,7 @@ class User extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($groupid) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid User Group id (%s)'),
+                    'Invalid User Group id (%s)',
                     $id
                 )
             );

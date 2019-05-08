@@ -44,7 +44,7 @@ class Group extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid User Group id (%s)'),
+                    'Invalid User Group id (%s)',
                     $id
                 )
             );

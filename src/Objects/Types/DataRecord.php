@@ -36,7 +36,7 @@ class DataRecord extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid Data record id (%s)'),
+                    'Invalid Data record id (%s)',
                     $id
                 )
             );
@@ -130,7 +130,7 @@ class DataRecord extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($parentid) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid Data record id (%s)'),
+                    'Invalid Data record id (%s)',
                     $parentid
                 )
             );

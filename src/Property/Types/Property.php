@@ -54,7 +54,7 @@ abstract class Property
         ) {
             $this->object = $owner;
         } else {
-            throw new \Exception(_('Invalid owner object in property constructor'));
+            throw new \Exception('Invalid owner object in property constructor');
         }
 
         $validProperty = \PerspectiveAPI\Init::validatePropertyid($propertyCode);

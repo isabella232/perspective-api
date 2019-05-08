@@ -113,7 +113,7 @@ class Job
     {
         if ($retryDelaySeconds < 0) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
-                _('The number of seconds to delay must be a positive integer or zero.')
+                'The number of seconds to delay must be a positive integer or zero.'
             );
         }
 

@@ -39,7 +39,7 @@ class ProjectInstance extends AbstractObject
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid Project Instance id (%s)'),
+                    'Invalid Project Instance id (%s)',
                     $id
                 )
             );

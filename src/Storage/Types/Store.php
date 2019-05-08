@@ -149,7 +149,7 @@ abstract class Store
         if (\PerspectiveAPI\Init::validatePropertyid($propertyid) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid propertyid (%s)'),
+                    'Invalid propertyid (%s)',
                     $propertyid
                 )
             );

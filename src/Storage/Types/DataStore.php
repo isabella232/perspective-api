@@ -69,7 +69,7 @@ class DataStore extends Store
         if (\PerspectiveAPI\Init::isValidID($id) === false) {
             throw new \PerspectiveAPI\Exception\InvalidDataException(
                 sprintf(
-                    _('Invalid Data record id (%s)'),
+                    'Invalid Data record id (%s)',
                     $id
                 )
             );
@@ -137,7 +137,7 @@ class DataStore extends Store
         string $dataRecordTypeCode
     ) {
         if ($dataRecordObject->getStorage() !== $this) {
-            throw new \PerspectiveAPI\Exception\InvalidDataException(_('Data record object does not belong to this data store'));
+            throw new \PerspectiveAPI\Exception\InvalidDataException('Data record object does not belong to this data store');
         }
 
         $typeClass = \PerspectiveAPI\Connector::getCustomTypeClassByName(
